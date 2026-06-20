@@ -717,8 +717,9 @@
   function pause(){ fadeTo(0); soundBtn.classList.remove('playing'); soundLbl.textContent='Activar'; setTimeout(()=>bgm.pause(),500); }
   soundBtn.addEventListener('click',e=>{ e.stopPropagation(); if(soundBtn.classList.contains('playing')){ userMuted=true; pause(); } else { userMuted=false; play(); } });
   // Arranca con el primer gesto del visitante (los navegadores bloquean el autoplay con sonido)
-  function firstGesture(){ if(!userMuted && bgm.paused) play(); document.removeEventListener('click',firstGesture); document.removeEventListener('touchstart',firstGesture); }
-  document.addEventListener('click',firstGesture); document.addEventListener('touchstart',firstGesture,{passive:true});
+  const GEVENTS=['click','touchstart','pointerdown','keydown','wheel','scroll'];
+  function firstGesture(){ if(!userMuted && bgm.paused) play(); GEVENTS.forEach(ev=>document.removeEventListener(ev,firstGesture)); }
+  GEVENTS.forEach(ev=>document.addEventListener(ev,firstGesture,{passive:true}));
 
   // ===== INTRO + SCROLL CON INERCIA (Lenis) + EFECTOS =====
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -766,7 +767,8 @@
   }
 
   // Barrido (clip-path) en imágenes al entrar — gobernado por el scroll (fiable con inercia + horizontal)
-  document.querySelectorAll('.villa-photo .ph, .galh-cell').forEach(el=>el.classList.add('wipe'));
+  document.querySelectorAll('.villa-photo .ph').forEach(el=>el.classList.add('wipe'));
+  if(window.innerWidth>880){ document.querySelectorAll('.galh-cell').forEach(el=>el.classList.add('wipe')); }
   function openWipes(){
     document.querySelectorAll('.wipe:not(.in)').forEach(el=>{
       const r=el.getBoundingClientRect();
