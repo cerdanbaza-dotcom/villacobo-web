@@ -4,25 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Villa Cobo · Villa de lujo en Torremolinos</title>
-  <meta name="description" content="Villa de lujo en Torremolinos. 5 habitaciones, jacuzzi privado, vistas al Mediterráneo. Consulta disponibilidad.">
+  <meta name="description" content="Villa de lujo en Torremolinos. 5 habitaciones, jacuzzi privado, vistas al Mediterráneo. Reserva directa, sin intermediarios.">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="apple-touch-icon" href="assets/favicon.svg">
   <meta name="theme-color" content="#1E2A1E">
 
-  <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
   <meta property="og:site_name" content="Villa Cobo">
   <meta property="og:title" content="Villa Cobo · Villa de lujo en Torremolinos">
-  <meta property="og:description" content="Cinco habitaciones, jacuzzi privado y vistas al Mediterráneo. Consulta disponibilidad para tu escapada en la Costa del Sol.">
+  <meta property="og:description" content="Cinco habitaciones, jacuzzi privado y vistas al Mediterráneo. Reserva directa para tu escapada en la Costa del Sol.">
   <meta property="og:url" content="https://villacobo.es/">
   <meta property="og:image" content="https://villacobo.es/assets/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-
-  <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Villa Cobo · Villa de lujo en Torremolinos">
   <meta name="twitter:description" content="Cinco habitaciones, jacuzzi privado y vistas al Mediterráneo en Torremolinos.">
@@ -30,465 +27,358 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Archivo:wght@200;300;400;500&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Archivo', sans-serif; background: #F3F0E6; color: #1E2A1E; overflow-x: hidden; }
-    a { text-decoration: none; color: inherit; }
-    img { display: block; width: 100%; object-fit: cover; }
+    :root{
+      --verde:#1E2A1E; --verde-mid:#36402F; --oro:#B89A4E; --oro-soft:rgba(184,154,78,.6);
+      --marfil:#F3F0E6; --gris:#4A5243; --gris-soft:#8C8674; --beige:#C7BFAC;
+    }
+    *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; }
+    body{ font-family:'Archivo',sans-serif; background:var(--marfil); color:var(--verde); overflow-x:hidden; }
+    a{ text-decoration:none; color:inherit; }
+    img{ display:block; width:100%; object-fit:cover; }
+    ::selection{ background:var(--verde); color:var(--marfil); }
 
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 48px;
-      background: rgba(10,10,10,.82); backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(212,184,106,.18);
-    }
-    .nav-logo {
-      display: flex; flex-direction: column; align-items: flex-start; gap: 1px;
-    }
-    .nav-logo span:first-child {
-      font-family: 'Archivo'; font-weight: 200; font-size: 10px;
-      letter-spacing: .55em; text-transform: uppercase; color: #D4B86A; padding-left: .55em;
-    }
-    .nav-logo span:last-child {
-      font-family: 'Bodoni Moda', serif; font-size: 22px; letter-spacing: .1em;
-      text-transform: uppercase; color: #F3F0E6; line-height: 1;
-    }
-    .nav-links { display: flex; align-items: center; gap: 32px; }
-    .nav-links a {
-      font-size: 10px; font-weight: 300; letter-spacing: .25em;
-      text-transform: uppercase; color: rgba(243,240,230,.75);
-      transition: color .2s;
-    }
-    .nav-links a:hover { color: #D4B86A; }
-    .nav-cta {
-      font-size: 10px; font-weight: 300; letter-spacing: .25em;
-      text-transform: uppercase; white-space: nowrap;
-      border: 1px solid rgba(212,184,106,.6);
-      color: #D4B86A;
-      padding: 10px 22px;
-      transition: background .2s, color .2s;
-    }
-    .nav-cta:hover { background: #D4B86A; color: #1E2A1E; }
+    /* ===== SCROLL PROGRESS ===== */
+    .progress{ position:fixed; top:0; left:0; height:2px; width:0; background:var(--oro); z-index:200; transition:width .1s linear; }
 
-    /* HERO */
-    .hero {
-      position: relative; min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 80px 64px;
-      color: #F3F0E6;
-    }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background-image: url('assets/img-terrace.jpg');
-      background-size: cover; background-position: center 30%;
-      filter: brightness(.65) contrast(1.05);
-    }
-    .hero-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(10,10,10,.3) 0%, rgba(10,10,10,.1) 40%, rgba(10,10,10,.85) 100%);
-    }
-    .hero-content { position: relative; max-width: 700px; }
-    .hero-tag {
-      font-size: 10px; font-weight: 300; letter-spacing: .5em;
-      text-transform: uppercase; color: #D4B86A; margin-bottom: 20px;
-    }
-    .hero-title {
-      font-family: 'Bodoni Moda', serif; font-size: clamp(64px, 9vw, 120px);
-      font-weight: 400; line-height: .9; letter-spacing: .04em;
-      text-transform: uppercase; margin-bottom: 24px;
-    }
-    .hero-title span { display: block; }
-    .hero-title .villa { font-size: .38em; letter-spacing: .55em; font-weight: 400; opacity: .85; }
-    .hero-sub {
-      font-size: 13px; font-weight: 300; letter-spacing: .15em;
-      color: rgba(243,240,230,.75); margin-bottom: 40px; line-height: 1.6;
-    }
-    .hero-cta {
-      display: inline-block; padding: 16px 40px;
-      border: 1px solid #D4B86A; color: #D4B86A;
-      font-size: 10px; font-weight: 400; letter-spacing: .35em; text-transform: uppercase;
-      transition: all .25s;
-    }
-    .hero-cta:hover { background: #D4B86A; color: #1E2A1E; }
-    .hero-scroll {
-      position: absolute; bottom: 32px; right: 64px;
-      font-size: 9px; letter-spacing: .4em; text-transform: uppercase;
-      color: rgba(243,240,230,.45); writing-mode: vertical-rl;
-    }
+    /* ===== CUSTOM CURSOR (desktop) ===== */
+    .cursor-dot{ position:fixed; top:0; left:0; width:7px; height:7px; border-radius:50%; background:var(--oro); pointer-events:none; z-index:300; transform:translate(-50%,-50%); mix-blend-mode:difference; }
+    .cursor-ring{ position:fixed; top:0; left:0; width:34px; height:34px; border:1px solid var(--oro-soft); border-radius:50%; pointer-events:none; z-index:300; transform:translate(-50%,-50%); transition:width .25s, height .25s, border-color .25s; }
+    .cursor-ring.grow{ width:60px; height:60px; border-color:var(--oro); }
+    @media (max-width:900px){ .cursor-dot,.cursor-ring{ display:none; } }
 
-    /* SECTION BASE */
-    section { padding: 100px 64px; }
-    .section-tag {
-      font-size: 9px; font-weight: 300; letter-spacing: .55em;
-      text-transform: uppercase; color: #D4B86A; margin-bottom: 16px;
+    /* ===== NAV ===== */
+    nav{
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:22px 48px; color:var(--marfil);
+      transition:padding .4s, background .4s, backdrop-filter .4s, border-color .4s;
+      border-bottom:1px solid transparent;
     }
-    .section-title {
-      font-family: 'Bodoni Moda', serif; font-size: clamp(36px, 5vw, 60px);
-      font-weight: 400; line-height: 1.05; letter-spacing: .03em;
-      text-transform: uppercase; color: #1E2A1E; margin-bottom: 24px;
+    nav.scrolled{
+      padding:14px 48px; background:rgba(12,12,12,.82);
+      backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(184,154,78,.18);
     }
-    .section-body {
-      font-size: 14px; font-weight: 300; line-height: 1.85;
-      color: #4A5243; max-width: 560px;
-    }
-    .divider {
-      width: 48px; height: 1px; background: #D4B86A; margin: 32px 0;
-    }
+    .nav-logo{ display:flex; align-items:baseline; gap:11px; }
+    .nav-logo .v{ font-weight:200; letter-spacing:.42em; font-size:10px; text-transform:uppercase; padding-left:.42em; color:var(--oro); }
+    .nav-logo .c{ font-family:'Bodoni Moda',serif; font-weight:400; letter-spacing:.08em; font-size:24px; line-height:.8; text-transform:uppercase; }
+    .nav-links{ display:flex; align-items:center; gap:34px; }
+    .nav-links a{ font-weight:300; letter-spacing:.22em; font-size:10px; text-transform:uppercase; opacity:.8; transition:opacity .2s,color .2s; }
+    .nav-links a:hover{ opacity:1; color:var(--oro); }
+    .nav-cta{ border:1px solid var(--oro-soft); padding:11px 24px; opacity:1 !important; color:var(--marfil) !important; transition:background .25s,color .25s !important; }
+    .nav-cta:hover{ background:var(--oro); color:var(--verde) !important; }
 
-    /* VILLA SECTION */
-    .villa-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-      align-items: center; margin-top: 60px;
-    }
-    .villa-image { height: 520px; overflow: hidden; }
-    .villa-image img { height: 100%; transition: transform .6s ease; }
-    .villa-image:hover img { transform: scale(1.03); }
-    .villa-features {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px;
-    }
-    .feature {
-      border-top: 1px solid rgba(30,42,30,.15); padding-top: 20px;
-    }
-    .feature-num {
-      font-family: 'Bodoni Moda', serif; font-size: 32px;
-      color: #D4B86A; line-height: 1; margin-bottom: 6px;
-    }
-    .feature-label {
-      font-size: 10px; font-weight: 300; letter-spacing: .3em;
-      text-transform: uppercase; color: #4A5243;
-    }
+    /* ===== HERO ===== */
+    .hero{ position:relative; height:100vh; min-height:640px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:var(--marfil); overflow:hidden; }
+    .hero-bg{ position:absolute; inset:0; overflow:hidden; background:#1E2A1E url('assets/hero-poster.jpg') center/cover no-repeat; }
+    .hero-bg video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:contrast(1.04) brightness(.7) saturate(.98); }
+    .hero-overlay{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(12,12,12,.45) 0%, rgba(12,12,12,.18) 42%, rgba(12,12,12,.92) 100%); }
+    .hero-content{ position:relative; z-index:2; padding:0 24px; }
+    .hero-eyebrow{ font-weight:200; letter-spacing:.72em; font-size:11px; text-transform:uppercase; opacity:0; padding-left:.72em; margin-bottom:26px; animation:fadeUp 1s ease .2s forwards; }
+    .hero-villa{ font-weight:200; letter-spacing:.62em; font-size:clamp(20px,3vw,28px); text-transform:uppercase; padding-left:.62em; line-height:1; }
+    .hero-cobo{ font-family:'Bodoni Moda',serif; font-weight:400; letter-spacing:.12em; font-size:clamp(78px,13vw,150px); line-height:.95; padding-left:.12em; text-transform:uppercase; }
+    .hero-cobo span,.hero-villa span{ display:inline-block; opacity:0; transform:translateY(40px); animation:letterIn .9s cubic-bezier(.2,.7,.2,1) forwards; }
+    @keyframes letterIn{ to{ opacity:1; transform:translateY(0); } }
+    .hero-line{ width:1px; height:44px; background:var(--oro); margin:30px auto 22px; transform:scaleY(0); transform-origin:top; animation:lineGrow .8s ease 1.3s forwards; }
+    @keyframes lineGrow{ to{ transform:scaleY(1); } }
+    .hero-tagline{ font-family:'Bodoni Moda',serif; font-style:italic; font-weight:400; font-size:clamp(18px,2.4vw,25px); opacity:0; max-width:24ch; margin:0 auto; animation:fadeUp 1s ease 1.5s forwards; }
+    .hero-btn{ display:inline-block; margin-top:38px; border:1px solid rgba(243,240,230,.55); color:var(--marfil); font-weight:300; letter-spacing:.26em; font-size:11px; text-transform:uppercase; padding:16px 42px; opacity:0; animation:fadeUp 1s ease 1.75s forwards; transition:background .25s,color .25s; }
+    .hero-btn:hover{ background:var(--marfil); color:var(--verde); }
+    @keyframes fadeUp{ from{ opacity:0; transform:translateY(24px); } to{ opacity:1; transform:translateY(0); } }
+    .hero-scroll{ position:absolute; bottom:26px; left:50%; transform:translateX(-50%); z-index:2; font-size:9px; letter-spacing:.4em; text-transform:uppercase; color:rgba(243,240,230,.5); display:flex; flex-direction:column; align-items:center; gap:10px; opacity:0; animation:fadeUp 1s ease 2s forwards; }
+    .hero-scroll i{ display:block; width:1px; height:40px; background:linear-gradient(var(--oro),transparent); animation:scrollPulse 1.8s ease-in-out infinite; }
+    @keyframes scrollPulse{ 0%,100%{ opacity:.3; transform:scaleY(.6); } 50%{ opacity:1; transform:scaleY(1); } }
+
+    /* ===== AVAILABILITY BAR ===== */
+    .availbar{ position:relative; z-index:5; max-width:940px; margin:-44px auto 0; background:var(--verde); color:var(--marfil); display:grid; grid-template-columns:1fr 1fr 1fr auto; align-items:stretch; box-shadow:0 30px 70px rgba(0,0,0,.4); }
+    .availbar > div{ padding:24px 30px; border-right:1px solid var(--verde-mid); cursor:pointer; transition:background .25s; }
+    .availbar > div:hover{ background:#23301F; }
+    .availbar .ab-label{ font-weight:300; letter-spacing:.24em; font-size:9px; text-transform:uppercase; color:var(--gris-soft); }
+    .availbar .ab-val{ font-family:'Bodoni Moda',serif; font-size:22px; margin-top:4px; }
+    .availbar a{ display:flex; align-items:center; justify-content:center; padding:0 42px; background:var(--oro); color:var(--verde); font-weight:400; letter-spacing:.24em; font-size:11px; text-transform:uppercase; transition:background .25s; }
+    .availbar a:hover{ background:var(--beige); }
+
+    /* ===== REVEAL ===== */
+    .reveal{ opacity:0; transform:translateY(46px); transition:opacity 1s cubic-bezier(.2,.7,.2,1), transform 1s cubic-bezier(.2,.7,.2,1); }
+    .reveal.in{ opacity:1; transform:none; }
+    .reveal.d1{ transition-delay:.1s; } .reveal.d2{ transition-delay:.2s; } .reveal.d3{ transition-delay:.3s; } .reveal.d4{ transition-delay:.4s; }
+
+    /* ===== SECTION BASE ===== */
+    section{ padding:130px 48px; }
+    .wrap{ max-width:1180px; margin:0 auto; }
+    .eyebrow{ font-weight:400; letter-spacing:.4em; font-size:10px; text-transform:uppercase; color:var(--oro); margin-bottom:22px; }
+    .h-section{ font-family:'Bodoni Moda',serif; font-weight:400; font-size:clamp(38px,5vw,56px); line-height:1.04; letter-spacing:-.01em; }
+    .p-body{ font-weight:300; font-size:16px; line-height:1.9; color:var(--gris); text-wrap:pretty; }
+
+    /* VILLA */
+    .villa-grid{ display:grid; grid-template-columns:1fr 1fr; gap:84px; align-items:center; }
+    .villa-grid h2 span{ font-style:italic; }
+    .stats{ display:flex; margin-top:44px; border-top:1px solid var(--verde); }
+    .stat{ padding:24px 34px 0 0; }
+    .stat:not(:last-child){ border-right:1px solid #D8D2C4; padding-right:34px; }
+    .stat:not(:first-child){ padding-left:34px; }
+    .stat-num{ font-family:'Bodoni Moda',serif; font-size:46px; line-height:1; }
+    .stat-lbl{ font-weight:300; letter-spacing:.18em; font-size:10px; text-transform:uppercase; color:var(--gris-soft); margin-top:8px; }
+    .villa-photo{ position:relative; }
+    .villa-photo .ph{ height:540px; overflow:hidden; }
+    .villa-photo .ph img{ height:118%; transition:transform .8s ease; will-change:transform; }
+    .villa-badge{ position:absolute; bottom:-1px; left:-1px; background:var(--verde); color:var(--marfil); padding:26px 30px; max-width:210px; font-family:'Bodoni Moda',serif; font-style:italic; font-size:23px; line-height:1.15; }
 
     /* ESPACIOS */
-    .espacios { background: #1E2A1E; color: #F3F0E6; }
-    .espacios .section-title { color: #F3F0E6; }
-    .espacios .section-body { color: rgba(243,240,230,.65); }
-    .espacios-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 60px;
-    }
-    .espacio-card { position: relative; overflow: hidden; cursor: pointer; }
-    .espacio-card img { height: 360px; transition: transform .5s; }
-    .espacio-card:hover img { transform: scale(1.05); }
-    .espacio-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg, transparent 50%, rgba(10,10,10,.85) 100%);
-      display: flex; align-items: flex-end; padding: 24px;
-    }
-    .espacio-label {
-      font-size: 10px; font-weight: 300; letter-spacing: .4em;
-      text-transform: uppercase; color: #F3F0E6;
-    }
+    .espacios{ background:var(--verde); color:var(--marfil); }
+    .espacios .h-section{ color:var(--marfil); }
+    .esp-head{ text-align:center; margin-bottom:72px; }
+    .esp-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--verde-mid); }
+    .esp-card{ background:var(--verde); padding:46px 30px; transition:background .35s; }
+    .esp-card:hover{ background:#23301F; }
+    .esp-num{ font-family:'Bodoni Moda',serif; font-size:30px; color:var(--oro); margin-bottom:26px; }
+    .esp-title{ font-family:'Bodoni Moda',serif; font-size:24px; margin-bottom:12px; }
+    .esp-text{ font-weight:300; font-size:13px; line-height:1.8; color:var(--beige); }
+
+    /* MARQUEE */
+    .marquee{ background:var(--oro); color:var(--verde); padding:18px 0; overflow:hidden; white-space:nowrap; }
+    .marquee-track{ display:inline-block; animation:marquee 28s linear infinite; }
+    .marquee-track span{ font-family:'Bodoni Moda',serif; font-style:italic; font-size:22px; padding:0 28px; }
+    .marquee-track span::after{ content:'·'; margin-left:56px; opacity:.5; }
+    @keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
     /* GALERIA */
-    .galeria-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: 320px 320px;
-      gap: 4px; margin-top: 60px;
-    }
-    .g1 { grid-column: 1/6; grid-row: 1/2; overflow: hidden; }
-    .g2 { grid-column: 6/9; grid-row: 1/2; overflow: hidden; }
-    .g3 { grid-column: 9/13; grid-row: 1/3; overflow: hidden; }
-    .g4 { grid-column: 1/4; grid-row: 2/3; overflow: hidden; }
-    .g5 { grid-column: 4/9; grid-row: 2/3; overflow: hidden; }
-    .galeria-grid div img { height: 100%; transition: transform .5s; }
-    .galeria-grid div:hover img { transform: scale(1.04); }
+    .gal-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:48px; }
+    .gal-link{ font-weight:300; letter-spacing:.2em; font-size:11px; text-transform:uppercase; border-bottom:1px solid var(--verde); padding-bottom:4px; }
+    .gal-grid{ display:grid; grid-template-columns:1fr 1fr 1fr; grid-auto-rows:240px; gap:14px; }
+    .gal-cell{ overflow:hidden; position:relative; }
+    .gal-cell img{ height:100%; transition:transform .7s ease; will-change:transform; }
+    .gal-cell:hover img{ transform:scale(1.06); }
+    .gal-big{ grid-column:span 2; grid-row:span 2; }
 
     /* UBICACION */
-    .ubicacion { background: #F3F0E6; }
-    .ubicacion-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-      align-items: center; margin-top: 60px;
-    }
-    .mapa-embed {
-      height: 420px; width: 100%; border: 0;
-      filter: grayscale(.35) contrast(1.05);
-    }
-    .ubicacion-list { list-style: none; margin-top: 32px; }
-    .ubicacion-list li {
-      display: flex; align-items: baseline; gap: 16px;
-      padding: 14px 0; border-bottom: 1px solid rgba(30,42,30,.12);
-      font-size: 13px; font-weight: 300; color: #4A5243;
-    }
-    .ubicacion-list li strong {
-      font-weight: 400; color: #1E2A1E; min-width: 140px;
-    }
+    .ubicacion{ background:#222; color:var(--marfil); }
+    .ubicacion .h-section{ color:var(--marfil); }
+    .ubicacion .h-section span{ font-style:italic; }
+    .ubi-grid{ display:grid; grid-template-columns:1fr 1fr; gap:84px; align-items:center; }
+    .ubi-list{ margin-top:36px; }
+    .ubi-list .row{ display:flex; justify-content:space-between; border-top:1px solid var(--verde-mid); padding:15px 0; font-weight:300; font-size:14px; }
+    .ubi-list .row:last-child{ border-bottom:1px solid var(--verde-mid); }
+    .ubi-list .row span:first-child{ color:var(--beige); letter-spacing:.06em; }
+    .ubi-list .row span:last-child{ font-family:'Bodoni Moda',serif; font-size:18px; }
+    .mapa{ height:480px; width:100%; border:0; filter:grayscale(.4) contrast(1.05) brightness(.92); }
 
     /* RESERVAR */
-    .reservar { background: #1E2A1E; color: #F3F0E6; }
-    .reservar .section-title { color: #F3F0E6; }
-    .reservar .section-body { color: rgba(243,240,230,.65); }
-    .reservar-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-      margin-top: 60px; align-items: start;
-    }
+    .reservar{ background:var(--marfil); }
+    .reservar .res-head{ text-align:center; margin-bottom:64px; }
+    .reservar-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; max-width:1000px; margin:0 auto; }
 
-    /* CALENDARIO */
-    .calendar-wrap { background: rgba(243,240,230,.06); padding: 32px; border: 1px solid rgba(212,184,106,.2); }
-    .cal-header {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 24px;
-    }
-    .cal-title {
-      font-family: 'Bodoni Moda', serif; font-size: 18px;
-      color: #F3F0E6; letter-spacing: .1em; text-transform: uppercase;
-    }
-    .cal-btn {
-      background: none; border: 1px solid rgba(212,184,106,.4); color: #D4B86A;
-      width: 32px; height: 32px; cursor: pointer; font-size: 14px;
-      display: flex; align-items: center; justify-content: center;
-      transition: background .2s;
-    }
-    .cal-btn:hover { background: rgba(212,184,106,.15); }
-    .cal-grid {
-      display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
-      text-align: center;
-    }
-    .cal-day-name {
-      font-size: 9px; letter-spacing: .25em; text-transform: uppercase;
-      color: rgba(243,240,230,.35); padding: 8px 0;
-    }
-    .cal-day {
-      font-size: 12px; font-weight: 300; color: rgba(243,240,230,.7);
-      padding: 10px 4px; cursor: pointer; border-radius: 2px;
-      transition: background .15s, color .15s;
-    }
-    .cal-day:hover:not(.past):not(.empty) { background: rgba(212,184,106,.2); color: #D4B86A; }
-    .cal-day.past { opacity: .25; cursor: default; }
-    .cal-day.empty { cursor: default; }
-    .cal-day.selected { background: #D4B86A; color: #1E2A1E !important; }
-    .cal-day.occupied { background: rgba(243,240,230,.08); color: rgba(243,240,230,.25); cursor: not-allowed; text-decoration: line-through; }
-    .cal-legend {
-      display: flex; gap: 20px; margin-top: 16px;
-      font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
-      color: rgba(243,240,230,.4);
-    }
-    .cal-legend span { display: flex; align-items: center; gap: 6px; }
-    .cal-legend span::before { content: ''; width: 10px; height: 10px; border-radius: 1px; }
-    .cal-legend .avail::before { background: rgba(212,184,106,.3); }
-    .cal-legend .occup::before { background: rgba(243,240,230,.08); }
+    .calendar-wrap{ background:var(--verde); color:var(--marfil); padding:32px; }
+    .cal-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+    .cal-title{ font-family:'Bodoni Moda',serif; font-size:18px; letter-spacing:.08em; text-transform:uppercase; }
+    .cal-btn{ background:none; border:1px solid var(--oro-soft); color:var(--oro); width:32px; height:32px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; transition:background .2s; }
+    .cal-btn:hover{ background:rgba(184,154,78,.15); }
+    .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; text-align:center; }
+    .cal-day-name{ font-size:9px; letter-spacing:.25em; text-transform:uppercase; color:rgba(243,240,230,.35); padding:8px 0; }
+    .cal-day{ font-size:12px; font-weight:300; color:rgba(243,240,230,.72); padding:10px 4px; cursor:pointer; border-radius:2px; transition:background .15s,color .15s; }
+    .cal-day:hover:not(.past):not(.empty):not(.occupied){ background:rgba(184,154,78,.22); color:var(--oro); }
+    .cal-day.past{ opacity:.22; cursor:default; }
+    .cal-day.empty{ cursor:default; }
+    .cal-day.selected{ background:var(--oro); color:var(--verde) !important; }
+    .cal-day.occupied{ background:rgba(243,240,230,.08); color:rgba(243,240,230,.25); cursor:not-allowed; text-decoration:line-through; }
+    .cal-legend{ display:flex; gap:20px; margin-top:16px; font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:rgba(243,240,230,.4); }
+    .cal-legend span{ display:flex; align-items:center; gap:6px; }
+    .cal-legend span::before{ content:''; width:10px; height:10px; border-radius:1px; }
+    .cal-legend .avail::before{ background:rgba(184,154,78,.4); }
+    .cal-legend .occup::before{ background:rgba(243,240,230,.08); }
 
-    /* FORM */
-    .booking-form { display: flex; flex-direction: column; gap: 20px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .form-group { display: flex; flex-direction: column; gap: 8px; }
-    .form-label {
-      font-size: 9px; font-weight: 300; letter-spacing: .35em;
-      text-transform: uppercase; color: rgba(243,240,230,.5);
-    }
-    .form-input {
-      background: rgba(243,240,230,.06); border: 1px solid rgba(243,240,230,.15);
-      color: #F3F0E6; padding: 14px 16px; font-family: 'Archivo'; font-size: 13px;
-      font-weight: 300; outline: none; transition: border-color .2s;
-      -webkit-appearance: none;
-    }
-    .form-input:focus { border-color: rgba(212,184,106,.6); }
-    .form-input::placeholder { color: rgba(243,240,230,.25); }
-    select.form-input { cursor: pointer; }
-    textarea.form-input { resize: none; min-height: 100px; }
-    .form-submit {
-      background: none; border: 1px solid #D4B86A; color: #D4B86A;
-      padding: 16px 32px; font-family: 'Archivo'; font-size: 10px;
-      font-weight: 400; letter-spacing: .35em; text-transform: uppercase;
-      cursor: pointer; transition: all .25s; margin-top: 8px; align-self: flex-start;
-    }
-    .form-submit:hover { background: #D4B86A; color: #1E2A1E; }
-    .form-note {
-      font-size: 11px; font-weight: 300; color: rgba(243,240,230,.35);
-      line-height: 1.7;
-    }
-    #form-success, #form-pending {
-      display: none; padding: 20px; border: 1px solid rgba(212,184,106,.4);
-      background: rgba(212,184,106,.08);
-      font-size: 13px; font-weight: 300; color: #D4B86A;
-      line-height: 1.7;
-    }
+    .booking-form{ display:flex; flex-direction:column; gap:18px; }
+    .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .form-group{ display:flex; flex-direction:column; gap:8px; }
+    .form-label{ font-size:9px; font-weight:300; letter-spacing:.32em; text-transform:uppercase; color:var(--gris-soft); }
+    .form-input{ background:#fff; border:1px solid #D8D2C4; color:var(--verde); padding:14px 16px; font-family:'Archivo'; font-size:13px; font-weight:300; outline:none; transition:border-color .2s; -webkit-appearance:none; }
+    .form-input:focus{ border-color:var(--oro); }
+    .form-input::placeholder{ color:#A9A395; }
+    select.form-input{ cursor:pointer; }
+    textarea.form-input{ resize:none; min-height:96px; }
+    .form-submit{ background:var(--verde); border:1px solid var(--verde); color:var(--marfil); padding:16px 32px; font-family:'Archivo'; font-size:10px; font-weight:400; letter-spacing:.32em; text-transform:uppercase; cursor:pointer; transition:all .25s; margin-top:6px; }
+    .form-submit:hover{ background:var(--oro); border-color:var(--oro); color:var(--verde); }
+    .form-note{ font-size:11px; font-weight:300; color:var(--gris-soft); line-height:1.7; margin-top:4px; }
+    #form-success,#form-pending{ display:none; padding:22px; border:1px solid var(--oro-soft); background:rgba(184,154,78,.08); font-size:13px; font-weight:300; color:var(--gris); line-height:1.7; }
 
     /* FOOTER */
-    footer {
-      background: #0C0C0C; padding: 60px 64px;
-      display: flex; justify-content: space-between; align-items: flex-end;
-      border-top: 1px solid rgba(212,184,106,.12);
-    }
-    .footer-logo {
-      display: flex; flex-direction: column; gap: 4px;
-    }
-    .footer-logo span:first-child {
-      font-size: 9px; letter-spacing: .55em; text-transform: uppercase;
-      color: #D4B86A; font-weight: 200;
-    }
-    .footer-logo span:last-child {
-      font-family: 'Bodoni Moda', serif; font-size: 36px;
-      text-transform: uppercase; color: #F3F0E6; letter-spacing: .08em;
-    }
-    .footer-right {
-      text-align: right; font-size: 11px; font-weight: 300;
-      color: rgba(243,240,230,.35); line-height: 2;
-    }
-    .footer-right a { color: rgba(243,240,230,.5); transition: color .2s; }
-    .footer-right a:hover { color: #D4B86A; }
+    footer{ background:var(--verde); color:var(--marfil); padding:84px 48px 44px; }
+    .footer-top{ display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:40px; border-bottom:1px solid var(--verde-mid); padding-bottom:48px; }
+    .footer-logo .v{ font-weight:200; letter-spacing:.6em; font-size:13px; text-transform:uppercase; padding-left:.6em; color:var(--beige); }
+    .footer-logo .c{ font-family:'Bodoni Moda',serif; font-weight:400; letter-spacing:.12em; font-size:52px; line-height:1; padding-left:.12em; text-transform:uppercase; }
+    .footer-logo .tag{ font-family:'Bodoni Moda',serif; font-style:italic; font-size:18px; opacity:.8; margin-top:10px; }
+    .footer-cols{ display:flex; gap:64px; font-weight:300; font-size:14px; }
+    .footer-cols .col{ display:flex; flex-direction:column; gap:12px; }
+    .footer-cols .head{ letter-spacing:.24em; font-size:10px; text-transform:uppercase; color:var(--gris-soft); }
+    .footer-cols a,.footer-cols span{ opacity:.85; }
+    .footer-cols a:hover{ color:var(--oro); opacity:1; }
+    .footer-bottom{ display:flex; justify-content:space-between; margin-top:24px; font-weight:300; letter-spacing:.14em; font-size:10px; text-transform:uppercase; color:var(--gris-soft); }
 
-    /* MOBILE */
-    @media (max-width: 768px) {
-      nav { padding: 14px 20px; }
-      .nav-links { display: none; }
-      section { padding: 60px 24px; }
-      .hero { padding: 40px 24px 60px; }
-      .hero-title { font-size: 56px; }
-      .villa-grid, .reservar-grid, .ubicacion-grid { grid-template-columns: 1fr; gap: 40px; }
-      .espacios-grid { grid-template-columns: 1fr; }
-      .galeria-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
-      .g1,.g2,.g3,.g4,.g5 { grid-column: auto; grid-row: auto; }
-      .galeria-grid div img { height: 200px; }
-      footer { flex-direction: column; gap: 32px; align-items: flex-start; }
-      .footer-right { text-align: left; }
+    /* ===== MOBILE ===== */
+    @media (max-width:880px){
+      nav,nav.scrolled{ padding:14px 20px; }
+      .nav-links{ display:none; }
+      section{ padding:80px 22px; }
+      .availbar{ grid-template-columns:1fr 1fr; margin:-30px 16px 0; }
+      .availbar a{ grid-column:span 2; padding:18px; }
+      .availbar > div:nth-child(3){ border-right:none; }
+      .villa-grid,.ubi-grid,.reservar-grid{ grid-template-columns:1fr; gap:40px; }
+      .villa-photo .ph{ height:380px; }
+      .esp-grid{ grid-template-columns:1fr 1fr; }
+      .gal-grid{ grid-template-columns:1fr 1fr; grid-auto-rows:180px; }
+      .gal-big{ grid-column:span 2; grid-row:span 1; }
+      .footer-top{ flex-direction:column; }
+      .stats{ flex-wrap:wrap; }
+    }
+    @media (prefers-reduced-motion:reduce){
+      *{ animation:none !important; transition:none !important; }
+      .reveal{ opacity:1; transform:none; }
     }
   </style>
 </head>
 <body>
 
+<div class="progress" id="progress"></div>
+<div class="cursor-dot" id="cdot"></div>
+<div class="cursor-ring" id="cring"></div>
+
 <!-- NAV -->
-<nav>
-  <a href="#top" class="nav-logo">
-    <span>Villa</span>
-    <span>Cobo</span>
-  </a>
+<nav id="nav">
+  <a href="#top" class="nav-logo"><span class="v">Villa</span><span class="c">Cobo</span></a>
   <div class="nav-links">
     <a href="#villa">La villa</a>
     <a href="#espacios">Espacios</a>
     <a href="#galeria">Galería</a>
     <a href="#ubicacion">Ubicación</a>
+    <a href="#reservar" class="nav-cta">Reservar</a>
   </div>
-  <a href="#reservar" class="nav-cta">Reservar</a>
 </nav>
 
 <!-- HERO -->
-<section id="top" class="hero">
-  <div class="hero-bg"></div>
+<header id="top" class="hero">
+  <div class="hero-bg"><video src="assets/hero.mp4" autoplay muted loop playsinline preload="auto" poster="assets/hero-poster.jpg"></video></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <p class="hero-tag">Torremolinos · Málaga · España</p>
-    <h1 class="hero-title">
-      <span class="villa">Villa</span>
-      Cobo
-    </h1>
-    <p class="hero-sub">Cinco habitaciones · Jacuzzi privado · Vistas al Mediterráneo</p>
-    <a href="#reservar" class="hero-cta">Solicitar reserva</a>
+    <p class="hero-eyebrow">Torremolinos · Costa del Sol</p>
+    <div class="hero-villa" id="heroVilla"></div>
+    <div class="hero-cobo" id="heroCobo"></div>
+    <div class="hero-line"></div>
+    <p class="hero-tagline">Un retiro privado donde el lujo es el silencio.</p>
+    <a href="#reservar" class="hero-btn" data-cursor>Consultar disponibilidad</a>
   </div>
-  <span class="hero-scroll">Descubrir</span>
-</section>
+  <div class="hero-scroll"><span>Descubrir</span><i></i></div>
+</header>
+
+<!-- AVAILABILITY BAR -->
+<div class="availbar reveal">
+  <div onclick="scrollToReservar()"><div class="ab-label">Entrada</div><div class="ab-val">Elegir fecha</div></div>
+  <div onclick="scrollToReservar()"><div class="ab-label">Salida</div><div class="ab-val">Elegir fecha</div></div>
+  <div onclick="scrollToReservar()"><div class="ab-label">Huéspedes</div><div class="ab-val">Hasta 10</div></div>
+  <a href="#reservar" data-cursor>Consultar</a>
+</div>
 
 <!-- VILLA -->
 <section id="villa">
-  <p class="section-tag">La villa</p>
-  <h2 class="section-title">Diseñada para<br>el descanso</h2>
-  <div class="divider"></div>
-  <div class="villa-grid">
-    <div>
-      <p class="section-body">Una villa de lujo en el corazón de Torremolinos, diseñada para quienes buscan privacidad, confort y estilo mediterráneo. Cinco habitaciones completamente equipadas, cocina de autor y un jacuzzi privado que espera la noche.</p>
-      <div class="villa-features">
-        <div class="feature">
-          <div class="feature-num">5</div>
-          <div class="feature-label">Habitaciones</div>
-        </div>
-        <div class="feature">
-          <div class="feature-num">1</div>
-          <div class="feature-label">Jacuzzi privado</div>
-        </div>
-        <div class="feature">
-          <div class="feature-num">3</div>
-          <div class="feature-label">Baños completos</div>
-        </div>
-        <div class="feature">
-          <div class="feature-num">10</div>
-          <div class="feature-label">Personas máx.</div>
-        </div>
+  <div class="wrap villa-grid">
+    <div class="reveal">
+      <div class="eyebrow">La villa</div>
+      <h2 class="h-section">Diseñada para<br><span>desaparecer</span><br>del mundo.</h2>
+      <p class="p-body" style="margin-top:28px; max-width:46ch;">Una villa de lujo en el corazón de Torremolinos, de líneas puras y materiales nobles. Cinco habitaciones, espacios abiertos bañados de luz y una zona privada con jacuzzi y vistas abiertas al Mediterráneo.</p>
+      <div class="stats">
+        <div class="stat"><div class="stat-num" data-count="5">0</div><div class="stat-lbl">Habitaciones</div></div>
+        <div class="stat"><div class="stat-num" data-count="3">0</div><div class="stat-lbl">Baños</div></div>
+        <div class="stat"><div class="stat-num" data-count="10">0</div><div class="stat-lbl">Huéspedes</div></div>
       </div>
     </div>
-    <div class="villa-image">
-      <img src="assets/img-living.jpg" alt="Salón Villa Cobo">
+    <div class="reveal d2 villa-photo">
+      <div class="ph"><img src="assets/img-living.jpg" alt="Salón de Villa Cobo" loading="lazy" data-parallax></div>
+      <div class="villa-badge">A 5 min<br>del mar</div>
     </div>
   </div>
 </section>
 
 <!-- ESPACIOS -->
 <section id="espacios" class="espacios">
-  <p class="section-tag">Espacios</p>
-  <h2 class="section-title">Cada rincón,<br>una experiencia</h2>
-  <div class="espacios-grid">
-    <div class="espacio-card">
-      <img src="assets/img-kitchen.jpeg" alt="Cocina">
-      <div class="espacio-overlay">
-        <span class="espacio-label">Cocina de autor</span>
-      </div>
+  <div class="wrap">
+    <div class="esp-head reveal">
+      <div class="eyebrow">Lo que te espera</div>
+      <h2 class="h-section">Cada detalle, intencionado</h2>
     </div>
-    <div class="espacio-card">
-      <img src="assets/img-bathroom.jpg" alt="Baño">
-      <div class="espacio-overlay">
-        <span class="espacio-label">Baños en mármol</span>
-      </div>
-    </div>
-    <div class="espacio-card">
-      <img src="assets/img-jacuzzi-night.jpg" alt="Jacuzzi">
-      <div class="espacio-overlay">
-        <span class="espacio-label">Jacuzzi privado</span>
-      </div>
+    <div class="esp-grid">
+      <div class="esp-card reveal d1"><div class="esp-num">01</div><div class="esp-title">Jacuzzi privado</div><p class="esp-text">Solárium y vistas abiertas al Mediterráneo para cerrar el día sin nadie alrededor.</p></div>
+      <div class="esp-card reveal d2"><div class="esp-num">02</div><div class="esp-title">Cocina de autor</div><p class="esp-text">Totalmente equipada y abierta al salón, con electrodomésticos premium.</p></div>
+      <div class="esp-card reveal d3"><div class="esp-num">03</div><div class="esp-title">Confort total</div><p class="esp-text">Climatización integral, lencería de calidad y WiFi de alta velocidad.</p></div>
+      <div class="esp-card reveal d4"><div class="esp-num">04</div><div class="esp-title">Ubicación</div><p class="esp-text">A pasos del centro de Torremolinos, las playas y la vida de la Costa del Sol.</p></div>
     </div>
   </div>
 </section>
 
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Reserva directa</span><span>Sin intermediarios</span><span>Atención personal</span><span>Torremolinos</span><span>Reserva directa</span><span>Sin intermediarios</span><span>Atención personal</span><span>Torremolinos</span>
+  </div>
+</div>
+
 <!-- GALERIA -->
 <section id="galeria">
-  <p class="section-tag">Galería</p>
-  <h2 class="section-title">Villa Cobo</h2>
-  <div class="galeria-grid">
-    <div class="g1"><img src="assets/img-terrace.jpg" alt="Terraza"></div>
-    <div class="g2"><img src="assets/img-bedroom.jpg" alt="Habitación"></div>
-    <div class="g3"><img src="assets/img-jacuzzi-night.jpg" alt="Jacuzzi noche"></div>
-    <div class="g4"><img src="assets/img-kitchen-detail.jpg" alt="Cocina detalle"></div>
-    <div class="g5"><img src="assets/img-kitchen-full.jpg" alt="Cocina"></div>
+  <div class="wrap">
+    <div class="gal-head reveal">
+      <div>
+        <div class="eyebrow">Galería</div>
+        <h2 class="h-section">Una pausa en cada plano</h2>
+      </div>
+      <a href="#reservar" class="gal-link" data-cursor>Ver disponibilidad →</a>
+    </div>
+    <div class="gal-grid">
+      <div class="gal-cell gal-big reveal"><img src="assets/img-kitchen.jpeg" alt="Cocina" loading="lazy"></div>
+      <div class="gal-cell reveal d1"><img src="assets/img-bedroom.jpg" alt="Habitación" loading="lazy"></div>
+      <div class="gal-cell reveal d2"><img src="assets/img-kitchen-detail.jpg" alt="Detalle de cocina" loading="lazy"></div>
+      <div class="gal-cell reveal d1"><img src="assets/img-bathroom.jpg" alt="Baño" loading="lazy"></div>
+      <div class="gal-cell reveal d2"><img src="assets/img-jacuzzi-night.jpg" alt="Jacuzzi de noche" loading="lazy"></div>
+      <div class="gal-cell reveal d3"><img src="assets/img-kitchen-full.jpg" alt="Cocina completa" loading="lazy"></div>
+    </div>
   </div>
 </section>
 
 <!-- UBICACION -->
 <section id="ubicacion" class="ubicacion">
-  <p class="section-tag">Ubicación</p>
-  <h2 class="section-title">Torremolinos,<br>Málaga</h2>
-  <div class="ubicacion-grid">
-    <div>
-      <p class="section-body">En el corazón de la Costa del Sol, a pocos minutos del mar y del aeropuerto de Málaga. El lugar perfecto para tu escapada de lujo.</p>
-      <ul class="ubicacion-list">
-        <li><strong>Aeropuerto Málaga</strong> 15 min en coche</li>
-        <li><strong>Playa</strong> 5 min a pie</li>
-        <li><strong>Centro Torremolinos</strong> 8 min a pie</li>
-        <li><strong>Marbella</strong> 40 min en coche</li>
-        <li><strong>Málaga ciudad</strong> 20 min en coche</li>
-      </ul>
+  <div class="wrap ubi-grid">
+    <div class="reveal">
+      <div class="eyebrow">Ubicación</div>
+      <h2 class="h-section">En el corazón de<br>Torremolinos, <span>Málaga.</span></h2>
+      <p class="p-body" style="color:var(--beige); margin-top:26px; max-width:44ch;">Entre el mar y el pulso del sur. Playas, paseo marítimo y la energía de la costa a pocos minutos. Marbella y Málaga, a un paso.</p>
+      <div class="ubi-list">
+        <div class="row"><span>Playa</span><span>5 min a pie</span></div>
+        <div class="row"><span>Centro de Torremolinos</span><span>8 min a pie</span></div>
+        <div class="row"><span>Aeropuerto de Málaga</span><span>15 min</span></div>
+        <div class="row"><span>Málaga capital</span><span>20 min</span></div>
+        <div class="row"><span>Marbella · Puerto Banús</span><span>40 min</span></div>
+      </div>
     </div>
-    <div>
-      <iframe
-        class="mapa-embed"
-        src="https://www.google.com/maps?q=Torremolinos,M%C3%A1laga,Espa%C3%B1a&z=13&output=embed"
-        loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-        title="Ubicación en Torremolinos, Málaga"></iframe>
+    <div class="reveal d2">
+      <iframe class="mapa" src="https://www.google.com/maps?q=Torremolinos,M%C3%A1laga,Espa%C3%B1a&z=13&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación en Torremolinos, Málaga"></iframe>
     </div>
   </div>
 </section>
 
 <!-- RESERVAR -->
 <section id="reservar" class="reservar">
-  <p class="section-tag">Reservar</p>
-  <h2 class="section-title">Consulta<br>disponibilidad</h2>
+  <div class="res-head reveal">
+    <div class="eyebrow">Reserva directa</div>
+    <h2 class="h-section">Consulta disponibilidad</h2>
+    <p class="p-body" style="max-width:42ch; margin:20px auto 0;">Atención directa, sin intermediarios. Te respondemos en menos de 24 horas.</p>
+  </div>
   <div class="reservar-grid">
-    <div>
+    <div class="reveal">
       <div class="calendar-wrap">
         <div class="cal-header">
-          <button class="cal-btn" id="prev-month">‹</button>
+          <button class="cal-btn" id="prev-month" data-cursor>‹</button>
           <span class="cal-title" id="cal-month-label"></span>
-          <button class="cal-btn" id="next-month">›</button>
+          <button class="cal-btn" id="next-month" data-cursor>›</button>
         </div>
         <div class="cal-grid" id="cal-grid"></div>
         <div class="cal-legend">
@@ -497,59 +387,31 @@
         </div>
       </div>
     </div>
-    <div>
-      <div id="form-success">
-        ✓ Solicitud recibida. Te contactaremos en menos de 24 horas para confirmar disponibilidad y condiciones.
-      </div>
-      <div id="form-pending">
-        El sistema de reservas online se activa en los próximos días.<br>
-        Vuelve muy pronto para consultar disponibilidad.
-      </div>
+    <div class="reveal d2">
+      <div id="form-success">✓ Solicitud recibida. Te contactaremos en menos de 24 horas para confirmar disponibilidad y condiciones.</div>
+      <div id="form-pending">El sistema de reservas online se activa en los próximos días.<br>Vuelve muy pronto para consultar disponibilidad.</div>
       <form class="booking-form" id="booking-form" method="POST">
         <input type="hidden" name="_subject" value="Nueva solicitud de reserva — Villa Cobo">
         <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Nombre</label>
-            <input type="text" name="nombre" class="form-input" placeholder="Tu nombre" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email</label>
-            <input type="email" name="email" class="form-input" placeholder="tu@email.com" required>
-          </div>
+          <div class="form-group"><label class="form-label">Nombre</label><input type="text" name="nombre" class="form-input" placeholder="Tu nombre" required></div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" name="email" class="form-input" placeholder="tu@email.com" required></div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Fecha entrada</label>
-            <input type="date" name="fecha_entrada" class="form-input" id="date-in" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Fecha salida</label>
-            <input type="date" name="fecha_salida" class="form-input" id="date-out" required>
-          </div>
+          <div class="form-group"><label class="form-label">Fecha entrada</label><input type="date" name="fecha_entrada" class="form-input" id="date-in" required></div>
+          <div class="form-group"><label class="form-label">Fecha salida</label><input type="date" name="fecha_salida" class="form-input" id="date-out" required></div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Personas</label>
+          <div class="form-group"><label class="form-label">Personas</label>
             <select name="personas" class="form-input">
               <option value="">Selecciona</option>
-              <option>2 personas</option>
-              <option>4 personas</option>
-              <option>6 personas</option>
-              <option>8 personas</option>
-              <option>10 personas</option>
+              <option>2 personas</option><option>4 personas</option><option>6 personas</option><option>8 personas</option><option>10 personas</option>
             </select>
           </div>
-          <div class="form-group">
-            <label class="form-label">Teléfono</label>
-            <input type="tel" name="telefono" class="form-input" placeholder="+34 600 000 000">
-          </div>
+          <div class="form-group"><label class="form-label">Teléfono</label><input type="tel" name="telefono" class="form-input" placeholder="+34 600 000 000"></div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Mensaje (opcional)</label>
-          <textarea name="mensaje" class="form-input" placeholder="¿Alguna petición especial?"></textarea>
-        </div>
-        <button type="submit" class="form-submit">Enviar solicitud</button>
-        <p class="form-note" style="margin-top:16px;">Recibirás respuesta en menos de 24 horas.<br>Sin pago anticipado — confirmamos por WhatsApp.</p>
+        <div class="form-group"><label class="form-label">Mensaje (opcional)</label><textarea name="mensaje" class="form-input" placeholder="¿Alguna petición especial?"></textarea></div>
+        <button type="submit" class="form-submit" data-cursor>Enviar solicitud</button>
+        <p class="form-note">Recibirás respuesta en menos de 24 horas.<br>Sin pago anticipado — confirmamos por WhatsApp.</p>
       </form>
     </div>
   </div>
@@ -557,95 +419,148 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">
-    <span>Villa</span>
-    <span>Cobo</span>
-  </div>
-  <div class="footer-right">
-    <div>Torremolinos · Málaga · España</div>
-    <div><a href="mailto:cerdanbaza@gmail.com">cerdanbaza@gmail.com</a></div>
-    <div style="margin-top:16px; font-size:10px; color:rgba(243,240,230,.2);">© 2026 Villa Cobo · Todos los derechos reservados</div>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-logo">
+        <div class="v">Villa</div>
+        <div class="c">Cobo</div>
+        <div class="tag">El lujo de lo esencial.</div>
+      </div>
+      <div class="footer-cols">
+        <div class="col">
+          <span class="head">Navegar</span>
+          <a href="#villa">La villa</a>
+          <a href="#espacios">Espacios</a>
+          <a href="#galeria">Galería</a>
+          <a href="#ubicacion">Ubicación</a>
+        </div>
+        <div class="col">
+          <span class="head">Contacto</span>
+          <a href="mailto:cerdanbaza@gmail.com">cerdanbaza@gmail.com</a>
+          <span>Torremolinos · Málaga</span>
+          <span>España</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Villa Cobo</span>
+      <span>Costa del Sol · España</span>
+    </div>
   </div>
 </footer>
 
 <script>
-  // CALENDAR
-  const OCCUPIED = []; // fechas ocupadas: ['2026-07-15', '2026-07-16', ...]
-  let currentDate = new Date();
-  const DAYS = ['L','M','X','J','V','S','D'];
-  const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  // ===== HERO LETTER REVEAL =====
+  function splitLetters(el, text, baseDelay){
+    el.innerHTML = '';
+    [...text].forEach((ch,i)=>{
+      const s=document.createElement('span');
+      s.textContent = ch===' ' ? ' ' : ch;
+      s.style.animationDelay = (baseDelay + i*0.05) + 's';
+      el.appendChild(s);
+    });
+  }
+  splitLetters(document.getElementById('heroVilla'),'VILLA',0.4);
+  splitLetters(document.getElementById('heroCobo'),'COBO',0.7);
 
-  function renderCalendar(d) {
-    const y = d.getFullYear(), m = d.getMonth();
-    document.getElementById('cal-month-label').textContent = `${MONTHS[m]} ${y}`;
-    const grid = document.getElementById('cal-grid');
-    grid.innerHTML = DAYS.map(d => `<div class="cal-day-name">${d}</div>`).join('');
-    const first = new Date(y, m, 1).getDay();
-    const offset = first === 0 ? 6 : first - 1;
-    const days = new Date(y, m + 1, 0).getDate();
-    const today = new Date(); today.setHours(0,0,0,0);
-    for (let i = 0; i < offset; i++) grid.innerHTML += `<div class="cal-day empty"></div>`;
-    for (let i = 1; i <= days; i++) {
-      const date = new Date(y, m, i);
-      const key = date.toISOString().slice(0,10);
-      const isPast = date < today;
-      const isOcc = OCCUPIED.includes(key);
-      let cls = 'cal-day';
-      if (isPast) cls += ' past';
-      else if (isOcc) cls += ' occupied';
-      grid.innerHTML += `<div class="${cls}" data-date="${key}">${i}</div>`;
+  // ===== NAV SCROLL STATE + PROGRESS =====
+  const nav=document.getElementById('nav'), progress=document.getElementById('progress');
+  function onScroll(){
+    const y=window.scrollY;
+    nav.classList.toggle('scrolled', y>40);
+    const h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(y/h*100):0)+'%';
+    // parallax
+    document.querySelectorAll('[data-parallax]').forEach(img=>{
+      const r=img.getBoundingClientRect();
+      if(r.bottom>0 && r.top<window.innerHeight){
+        const off=(r.top - window.innerHeight/2)*-0.04;
+        img.style.transform=`translateY(${off}px)`;
+      }
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  // ===== REVEAL ON SCROLL =====
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // ===== COUNTERS =====
+  const cio=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const el=e.target, target=+el.dataset.count; let n=0;
+        const step=Math.max(1,Math.ceil(target/24));
+        const t=setInterval(()=>{ n+=step; if(n>=target){ n=target; clearInterval(t);} el.textContent=n; }, 32);
+        cio.unobserve(el);
+      }
+    });
+  },{threshold:0.6});
+  document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+
+  // ===== CUSTOM CURSOR =====
+  const dot=document.getElementById('cdot'), ring=document.getElementById('cring');
+  let rx=0,ry=0,mx=0,my=0;
+  if(window.matchMedia('(pointer:fine)').matches){
+    window.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+    (function loop(){ rx+=(mx-rx)*0.18; ry+=(my-ry)*0.18; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
+    document.querySelectorAll('a,button,[data-cursor]').forEach(el=>{
+      el.addEventListener('mouseenter',()=>ring.classList.add('grow'));
+      el.addEventListener('mouseleave',()=>ring.classList.remove('grow'));
+    });
+  }
+
+  function scrollToReservar(){ document.getElementById('reservar').scrollIntoView({behavior:'smooth'}); }
+
+  // ===== CALENDAR =====
+  const OCCUPIED = []; // ['2026-07-15', ...]
+  let currentDate = new Date();
+  const DAYS=['L','M','X','J','V','S','D'];
+  const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  function renderCalendar(d){
+    const y=d.getFullYear(), m=d.getMonth();
+    document.getElementById('cal-month-label').textContent=`${MONTHS[m]} ${y}`;
+    const grid=document.getElementById('cal-grid');
+    grid.innerHTML=DAYS.map(x=>`<div class="cal-day-name">${x}</div>`).join('');
+    const first=new Date(y,m,1).getDay();
+    const offset=first===0?6:first-1;
+    const days=new Date(y,m+1,0).getDate();
+    const today=new Date(); today.setHours(0,0,0,0);
+    for(let i=0;i<offset;i++) grid.innerHTML+=`<div class="cal-day empty"></div>`;
+    for(let i=1;i<=days;i++){
+      const date=new Date(y,m,i);
+      const key=`${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
+      let cls='cal-day';
+      if(date<today) cls+=' past';
+      else if(OCCUPIED.includes(key)) cls+=' occupied';
+      grid.innerHTML+=`<div class="${cls}" data-date="${key}">${i}</div>`;
     }
-    grid.querySelectorAll('.cal-day:not(.past):not(.empty):not(.occupied)').forEach(el => {
-      el.addEventListener('click', () => {
-        grid.querySelectorAll('.selected').forEach(s => s.classList.remove('selected'));
+    grid.querySelectorAll('.cal-day:not(.past):not(.empty):not(.occupied)').forEach(el=>{
+      el.addEventListener('click',()=>{
+        grid.querySelectorAll('.selected').forEach(s=>s.classList.remove('selected'));
         el.classList.add('selected');
-        const dateIn = document.getElementById('date-in');
-        if (dateIn) dateIn.value = el.dataset.date;
+        const di=document.getElementById('date-in'); if(di) di.value=el.dataset.date;
       });
     });
   }
-  document.getElementById('prev-month').addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(currentDate);
-  });
-  document.getElementById('next-month').addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(currentDate);
-  });
+  document.getElementById('prev-month').addEventListener('click',()=>{ currentDate.setMonth(currentDate.getMonth()-1); renderCalendar(currentDate); });
+  document.getElementById('next-month').addEventListener('click',()=>{ currentDate.setMonth(currentDate.getMonth()+1); renderCalendar(currentDate); });
   renderCalendar(currentDate);
 
-  // FORM
-  // ── Para activar el envío real: pega aquí el ID de Formspree (formspree.io/f/XXXXXXXX)
-  const FORMSPREE_ID = ''; // ej: 'xqkeabcd' — mientras esté vacío, el formulario muestra "reservas en breve"
-  const form = document.getElementById('booking-form');
-  form.addEventListener('submit', async e => {
+  // ===== FORM (Formspree) =====
+  const FORMSPREE_ID=''; // pega aquí el ID (formspree.io/f/XXXXXXXX). Vacío = modo "reservas en breve"
+  const form=document.getElementById('booking-form');
+  form.addEventListener('submit', async e=>{
     e.preventDefault();
-
-    // Modo previo: reservas online aún no activas
-    if (!FORMSPREE_ID) {
-      form.style.display = 'none';
-      document.getElementById('form-pending').style.display = 'block';
-      return;
-    }
-
-    const btn = form.querySelector('.form-submit');
-    btn.textContent = 'Enviando...';
-    btn.disabled = true;
-    try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
-      if (res.ok) {
-        form.style.display = 'none';
-        document.getElementById('form-success').style.display = 'block';
-      } else {
-        btn.textContent = 'Error — inténtalo de nuevo';
-        btn.disabled = false;
-      }
-    } catch {
-      btn.textContent = 'Error — inténtalo de nuevo';
-      btn.disabled = false;
-    }
+    if(!FORMSPREE_ID){ form.style.display='none'; document.getElementById('form-pending').style.display='block'; return; }
+    const btn=form.querySelector('.form-submit'); btn.textContent='Enviando...'; btn.disabled=true;
+    try{
+      const res=await fetch(`https://formspree.io/f/${FORMSPREE_ID}`,{ method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
+      if(res.ok){ form.style.display='none'; document.getElementById('form-success').style.display='block'; }
+      else{ btn.textContent='Error — inténtalo de nuevo'; btn.disabled=false; }
+    }catch{ btn.textContent='Error — inténtalo de nuevo'; btn.disabled=false; }
   });
 </script>
 </body>
