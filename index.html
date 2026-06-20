@@ -227,6 +227,28 @@
     .form-note{ font-size:11px; font-weight:300; color:var(--gris-soft); line-height:1.7; margin-top:4px; }
     #form-success,#form-pending{ display:none; padding:22px; border:1px solid var(--oro-soft); background:rgba(184,154,78,.08); font-size:13px; font-weight:300; color:var(--gris); line-height:1.7; }
 
+    /* ===== SHOWCASE (imagen que se expande al scroll) ===== */
+    .showcase{ position:relative; height:220vh; background:var(--verde); }
+    .showcase-sticky{ position:sticky; top:0; height:100vh; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+    .showcase-img{ position:absolute; top:50%; left:50%; width:62vw; height:64vh; transform:translate(-50%,-50%); background-image:url('assets/show-terraza.jpg'); background-size:cover; background-position:center 60%; will-change:width,height; }
+    .showcase-veil{ position:absolute; inset:0; background:rgba(12,12,12,.32); opacity:0; transition:opacity .2s; }
+    .showcase-cap{ position:relative; z-index:3; text-align:center; color:var(--marfil); padding:0 24px; will-change:opacity,transform; }
+    .showcase-cap .eyebrow{ color:var(--oro); }
+    .showcase-cap h2{ font-family:'Bodoni Moda',serif; font-weight:400; font-size:clamp(34px,5vw,58px); line-height:1.08; }
+    .showcase-cap h2 span{ font-style:italic; }
+
+    /* ===== GALERÍA HORIZONTAL ===== */
+    .galh{ position:relative; background:var(--marfil); }
+    .galh-sticky{ position:sticky; top:0; height:100vh; overflow:hidden; display:flex; flex-direction:column; justify-content:center; }
+    .galh-head{ padding:0 48px 28px; display:flex; justify-content:space-between; align-items:flex-end; }
+    .galh-track{ display:flex; gap:16px; padding:0 48px; will-change:transform; }
+    .galh-cell{ flex:0 0 auto; width:clamp(300px,38vw,560px); height:62vh; overflow:hidden; position:relative; }
+    .galh-cell img{ height:100%; width:100%; object-fit:cover; transition:transform .7s ease; }
+    .galh-cell:hover img{ transform:scale(1.05); }
+    .galh-cell .tag{ position:absolute; bottom:18px; left:18px; z-index:2; color:var(--marfil); font-weight:300; letter-spacing:.28em; font-size:10px; text-transform:uppercase; }
+    .galh-cell::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg,transparent 55%,rgba(12,12,12,.55) 100%); }
+    .galh-hint{ position:absolute; bottom:26px; left:50%; transform:translateX(-50%); font-size:9px; letter-spacing:.4em; text-transform:uppercase; color:var(--gris-soft); }
+
     /* FOOTER */
     footer{ background:var(--verde); color:var(--marfil); padding:84px 48px 44px; }
     .footer-top{ display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:40px; border-bottom:1px solid var(--verde-mid); padding-bottom:48px; }
@@ -255,6 +277,17 @@
       .gal-big{ grid-column:span 2; grid-row:span 1; }
       .footer-top{ flex-direction:column; }
       .stats{ flex-wrap:wrap; }
+      /* showcase: en móvil sin scroll-jacking, imagen fija grande */
+      .showcase{ height:auto; }
+      .showcase-sticky{ position:relative; height:78vh; }
+      .showcase-img{ width:100vw; height:78vh; }
+      .showcase-veil{ opacity:1; }
+      /* galería: en móvil swipe horizontal nativo, sin pin */
+      .galh-sticky{ position:relative; height:auto; padding:70px 0; }
+      .galh-head{ padding:0 22px 24px; }
+      .galh-track{ overflow-x:auto; scroll-snap-type:x mandatory; padding:0 22px 10px; -webkit-overflow-scrolling:touch; transform:none !important; }
+      .galh-cell{ width:78vw; height:52vh; scroll-snap-align:center; }
+      .galh-hint{ display:none; }
     }
     @media (prefers-reduced-motion:reduce){
       *{ animation:none !important; transition:none !important; }
@@ -345,6 +378,18 @@
   </div>
 </section>
 
+<!-- SHOWCASE — imagen que se expande al scroll -->
+<section class="showcase" id="showcase">
+  <div class="showcase-sticky">
+    <div class="showcase-img" id="showImg"></div>
+    <div class="showcase-veil" id="showVeil"></div>
+    <div class="showcase-cap" id="showCap">
+      <div class="eyebrow">El sur, en privado</div>
+      <h2>Donde el día<br>se <span>detiene</span>.</h2>
+    </div>
+  </div>
+</section>
+
 <!-- MARQUEE -->
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
@@ -352,24 +397,27 @@
   </div>
 </div>
 
-<!-- GALERIA -->
-<section id="galeria">
-  <div class="wrap">
-    <div class="gal-head reveal">
+<!-- GALERIA HORIZONTAL -->
+<section class="galh" id="galeria">
+  <div class="galh-sticky">
+    <div class="galh-head reveal">
       <div>
         <div class="eyebrow">Galería</div>
         <h2 class="h-section">Una pausa en cada plano</h2>
       </div>
       <a href="#reservar" class="gal-link" data-cursor>Ver disponibilidad →</a>
     </div>
-    <div class="gal-grid">
-      <div class="gal-cell gal-big reveal"><img src="assets/img-kitchen.jpeg" alt="Cocina" loading="lazy"></div>
-      <div class="gal-cell reveal d1"><img src="assets/img-bedroom.jpg" alt="Habitación" loading="lazy"></div>
-      <div class="gal-cell reveal d2"><img src="assets/img-kitchen-detail.jpg" alt="Detalle de cocina" loading="lazy"></div>
-      <div class="gal-cell reveal d1"><img src="assets/img-bathroom.jpg" alt="Baño" loading="lazy"></div>
-      <div class="gal-cell reveal d2"><img src="assets/img-jacuzzi-night.jpg" alt="Jacuzzi de noche" loading="lazy"></div>
-      <div class="gal-cell reveal d3"><img src="assets/img-kitchen-full.jpg" alt="Cocina completa" loading="lazy"></div>
+    <div class="galh-track" id="galhTrack">
+      <div class="galh-cell"><img src="assets/g-terraza.jpg" alt="Azotea con vistas" loading="lazy"><span class="tag">Azotea</span></div>
+      <div class="galh-cell"><img src="assets/g-salon.jpg" alt="Salón" loading="lazy"><span class="tag">Salón</span></div>
+      <div class="galh-cell"><img src="assets/g-cocina.jpg" alt="Cocina" loading="lazy"><span class="tag">Cocina de autor</span></div>
+      <div class="galh-cell"><img src="assets/g-estanteria.jpg" alt="Zona de estar" loading="lazy"><span class="tag">Estar</span></div>
+      <div class="galh-cell"><img src="assets/g-bano2.jpg" alt="Baño en mármol" loading="lazy"><span class="tag">Baño en mármol</span></div>
+      <div class="galh-cell"><img src="assets/g-vestidor.jpg" alt="Dormitorio con vestidor" loading="lazy"><span class="tag">Dormitorio</span></div>
+      <div class="galh-cell"><img src="assets/g-sofa.jpg" alt="Zona de descanso" loading="lazy"><span class="tag">Descanso</span></div>
+      <div class="galh-cell"><img src="assets/g-bano.jpg" alt="Ducha en mármol" loading="lazy"><span class="tag">Ducha</span></div>
     </div>
+    <div class="galh-hint">Desliza ↓</div>
   </div>
 </section>
 
@@ -507,8 +555,43 @@
         img.style.transform=`translateY(${off}px)`;
       }
     });
+    if(window.innerWidth>880){ updateShowcase(); updateGalh(); }
   }
   window.addEventListener('scroll', onScroll, {passive:true});
+
+  // ===== SHOWCASE: imagen que se expande =====
+  const showSec=document.getElementById('showcase'), showImg=document.getElementById('showImg'),
+        showVeil=document.getElementById('showVeil'), showCap=document.getElementById('showCap');
+  function clamp(v,a,b){ return Math.min(b,Math.max(a,v)); }
+  function updateShowcase(){
+    if(!showSec) return;
+    const r=showSec.getBoundingClientRect();
+    const p=clamp(-r.top/(showSec.offsetHeight-window.innerHeight),0,1);
+    showImg.style.width=(62+38*p)+'vw';
+    showImg.style.height=(64+36*p)+'vh';
+    showVeil.style.opacity=(p*0.4).toFixed(2);
+    showCap.style.opacity=(1-clamp(p*1.4,0,1)).toFixed(2);
+    showCap.style.transform=`translateY(${(-30*p).toFixed(0)}px)`;
+  }
+  // ===== GALERÍA HORIZONTAL (pin + desplazamiento lateral) =====
+  const galhSec=document.getElementById('galeria'), galhTrack=document.getElementById('galhTrack');
+  let galhExtra=0;
+  function sizeGalh(){
+    if(!galhSec) return;
+    if(window.innerWidth<=880){ galhSec.style.height=''; galhTrack.style.transform=''; galhExtra=0; return; }
+    galhExtra=Math.max(0, galhTrack.scrollWidth - window.innerWidth + 48);
+    galhSec.style.height=(window.innerHeight + galhExtra)+'px';
+  }
+  function updateGalh(){
+    if(!galhSec) return;
+    if(galhExtra<=0){ sizeGalh(); if(galhExtra<=0) return; }
+    const r=galhSec.getBoundingClientRect();
+    const p=clamp(-r.top/(galhSec.offsetHeight-window.innerHeight),0,1);
+    galhTrack.style.transform=`translateX(${(-galhExtra*p).toFixed(0)}px)`;
+  }
+  window.addEventListener('resize', ()=>{ sizeGalh(); if(window.innerWidth>880){ updateShowcase(); updateGalh(); } });
+  window.addEventListener('load', ()=>{ sizeGalh(); onScroll(); });
+  sizeGalh();
 
   // ===== REVEAL ON SCROLL =====
   const io=new IntersectionObserver((entries)=>{
