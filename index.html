@@ -765,8 +765,18 @@
     });
   }
 
-  // Barrido (clip-path) en imágenes al entrar
-  document.querySelectorAll('.villa-photo .ph, .galh-cell').forEach(el=>{ el.classList.add('wipe'); io.observe(el); });
+  // Barrido (clip-path) en imágenes al entrar — gobernado por el scroll (fiable con inercia + horizontal)
+  document.querySelectorAll('.villa-photo .ph, .galh-cell').forEach(el=>el.classList.add('wipe'));
+  function openWipes(){
+    document.querySelectorAll('.wipe:not(.in)').forEach(el=>{
+      const r=el.getBoundingClientRect();
+      const vis = r.top < window.innerHeight*0.94 && r.bottom > 0 && r.left < window.innerWidth*0.96 && r.right > window.innerWidth*0.04;
+      if(vis) el.classList.add('in');
+    });
+  }
+  window.addEventListener('scroll', openWipes, {passive:true});
+  if(lenis) lenis.on('scroll', openWipes);
+  setTimeout(openWipes, 100); setTimeout(openWipes, 2200);
 </script>
 </body>
 </html>
