@@ -114,6 +114,12 @@
 
       <hr style="margin-top:8px;">
 
+      <!-- SOLICITUDES -->
+      <div class="sect-title">Solicitudes <span id="reqBadge" style="font-family:'Archivo'; font-size:10px; letter-spacing:.1em; color:var(--oro);"></span></div>
+      <div class="res-list" id="reqList"></div>
+
+      <hr style="margin-top:24px;">
+
       <!-- NUEVA RESERVA -->
       <div class="sect-title">Nueva reserva</div>
       <div class="frow">
@@ -158,21 +164,51 @@
     const DAYS=['L','M','X','J','V','S','D'];
     const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     let EMAIL='', PASS='', current=new Date();
-    let resDates=new Set(), manualDates=new Set(), reservations=[];
+    let resDates=new Set(), manualDates=new Set(), reservations=[], requests=[];
 
     const $=id=>document.getElementById(id);
     function key(y,m,d){ return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
     function fmt(s){ const [y,m,d]=s.split('-'); return `${d}/${m}/${y}`; }
 
     async function loadAll(){
-      const [{ data:bd }, { data:res }] = await Promise.all([
+      const [{ data:bd }, { data:res }, { data:req }] = await Promise.all([
         sb.from('blocked_dates').select('d, reservation_id'),
-        sb.rpc('panel_list_reservations', { p_email:EMAIL, p_pass:PASS })
+        sb.rpc('panel_list_reservations', { p_email:EMAIL, p_pass:PASS }),
+        sb.rpc('panel_list_requests', { p_email:EMAIL, p_pass:PASS })
       ]);
       resDates = new Set((bd||[]).filter(r=>r.reservation_id).map(r=>r.d));
       manualDates = new Set((bd||[]).filter(r=>!r.reservation_id).map(r=>r.d));
-      reservations = res||[];
-      render(); renderList();
+      reservations = res||[]; requests = req||[];
+      render(); renderList(); renderRequests();
+    }
+
+    function renderRequests(){
+      const box=$('reqList'), badge=$('reqBadge');
+      const pend=requests.filter(r=>!r.handled).length;
+      badge.textContent = pend? `· ${pend} sin atender` : '';
+      if(!requests.length){ box.innerHTML='<div class="empty-note">Sin solicitudes por ahora.</div>'; return; }
+      box.innerHTML = requests.map(r=>{
+        const fechas = (r.fecha_entrada&&r.fecha_salida)? `${fmt(r.fecha_entrada)} → ${fmt(r.fecha_salida)}` : 'Sin fechas';
+        return `<div class="res-item" style="${r.handled?'opacity:.5;':''}">
+          <div>
+            <div class="ri-dates">${fechas}${r.personas?(' · '+r.personas):''}</div>
+            <div class="ri-name">${r.nombre||'—'}</div>
+            <div class="ri-meta">
+              ${r.email?('Email: '+r.email+'<br>'):''}${r.telefono?('Tel: '+r.telefono+'<br>'):''}${r.mensaje?('"'+r.mensaje+'"'):''}
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <button class="ri-del" style="border-color:var(--oro-soft); color:var(--oro);" data-h="${r.id}" data-v="${r.handled?'0':'1'}">${r.handled?'Reabrir':'Atendida'}</button>
+            <button class="ri-del" data-dr="${r.id}">Borrar</button>
+          </div>
+        </div>`; }).join('');
+      box.querySelectorAll('[data-h]').forEach(b=>b.addEventListener('click',async()=>{
+        await sb.rpc('panel_request_handled',{ p_email:EMAIL, p_pass:PASS, p_id:b.dataset.h, p_handled:b.dataset.v==='1' }); loadAll();
+      }));
+      box.querySelectorAll('[data-dr]').forEach(b=>b.addEventListener('click',async()=>{
+        if(!confirm('¿Borrar esta solicitud?')) return;
+        await sb.rpc('panel_delete_request',{ p_email:EMAIL, p_pass:PASS, p_id:b.dataset.dr }); loadAll();
+      }));
     }
 
     function render(){

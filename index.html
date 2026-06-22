@@ -701,15 +701,23 @@
   document.getElementById('next-month').addEventListener('click',()=>{ currentDate.setMonth(currentDate.getMonth()+1); renderCalendar(currentDate); });
   renderCalendar(currentDate);
 
-  // ===== FORM (Formspree) =====
-  const FORMSPREE_ID=''; // pega aquí el ID (formspree.io/f/XXXXXXXX). Vacío = modo "reservas en breve"
+  // ===== FORM -> guarda la solicitud (Supabase, visible en /panel) =====
+  const RSB='https://pxvgambejvesosplgibb.supabase.co', RK='sb_publishable_h0iKwibrHL5ZOigyKx9nJQ_fdj5g0uj';
   const form=document.getElementById('booking-form');
   form.addEventListener('submit', async e=>{
     e.preventDefault();
-    if(!FORMSPREE_ID){ form.style.display='none'; document.getElementById('form-pending').style.display='block'; return; }
     const btn=form.querySelector('.form-submit'); btn.textContent='Enviando...'; btn.disabled=true;
+    const g=n=>{ const el=form.querySelector(`[name="${n}"]`); return el?el.value.trim():''; };
     try{
-      const res=await fetch(`https://formspree.io/f/${FORMSPREE_ID}`,{ method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
+      const res=await fetch(`${RSB}/rest/v1/rpc/submit_request`,{
+        method:'POST',
+        headers:{ apikey:RK, Authorization:'Bearer '+RK, 'Content-Type':'application/json' },
+        body:JSON.stringify({
+          p_nombre:g('nombre'), p_email:g('email'), p_telefono:g('telefono'),
+          p_in:g('fecha_entrada')||null, p_out:g('fecha_salida')||null,
+          p_personas:g('personas'), p_mensaje:g('mensaje')
+        })
+      });
       if(res.ok){ form.style.display='none'; document.getElementById('form-success').style.display='block'; }
       else{ btn.textContent='Error — inténtalo de nuevo'; btn.disabled=false; }
     }catch{ btn.textContent='Error — inténtalo de nuevo'; btn.disabled=false; }
