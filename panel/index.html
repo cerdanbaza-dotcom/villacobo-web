@@ -21,8 +21,8 @@
     .brand .sub{ font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:var(--gris-soft); margin-top:10px; }
 
     .label{ font-size:9px; font-weight:300; letter-spacing:.32em; text-transform:uppercase; color:var(--gris-soft); display:block; margin-bottom:8px; }
-    input[type=password]{ width:100%; background:rgba(243,240,230,.06); border:1px solid rgba(243,240,230,.18); color:var(--marfil); padding:14px 16px; font-family:'Archivo'; font-size:14px; outline:none; transition:border-color .2s; }
-    input[type=password]:focus{ border-color:var(--oro); }
+    input[type=password],input[type=email]{ width:100%; background:rgba(243,240,230,.06); border:1px solid rgba(243,240,230,.18); color:var(--marfil); padding:14px 16px; font-family:'Archivo'; font-size:14px; outline:none; transition:border-color .2s; }
+    input[type=password]:focus,input[type=email]:focus{ border-color:var(--oro); }
     .btn{ width:100%; margin-top:18px; background:var(--oro); border:1px solid var(--oro); color:var(--verde); padding:15px; font-family:'Archivo'; font-size:11px; font-weight:400; letter-spacing:.3em; text-transform:uppercase; cursor:pointer; transition:background .2s; }
     .btn:hover{ background:#C7BFAC; }
     .btn:disabled{ opacity:.5; cursor:default; }
@@ -64,7 +64,9 @@
 
     <!-- LOGIN -->
     <div id="login">
-      <label class="label" for="pass">Contraseña</label>
+      <label class="label" for="email">Email</label>
+      <input type="email" id="email" placeholder="info@villacobo.es" autocomplete="username" value="info@villacobo.es">
+      <label class="label" for="pass" style="margin-top:16px;">Contraseña</label>
       <input type="password" id="pass" placeholder="••••••••" autocomplete="current-password">
       <button class="btn" id="enter">Entrar</button>
       <div class="msg" id="loginMsg"></div>
@@ -88,6 +90,15 @@
       </div>
       <div class="msg" id="panelMsg"></div>
       <p class="hint">Toca un día para marcarlo <b>Ocupado</b> o liberarlo.<br>Lo que bloquees aquí aparece como no disponible en villacobo.es.</p>
+      <div style="margin-top:22px; border-top:1px solid rgba(184,154,78,.15); padding-top:16px; text-align:center;">
+        <button class="logout" id="showcp">Cambiar contraseña</button>
+        <div id="cp" style="display:none; margin-top:14px; text-align:left;">
+          <label class="label" for="cpNew">Nueva contraseña</label>
+          <input type="password" id="cpNew" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+          <button class="btn" id="cpSave">Guardar contraseña</button>
+          <div class="msg" id="cpMsg"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -99,7 +110,7 @@
 
     const DAYS=['L','M','X','J','V','S','D'];
     const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-    let PASS='', current=new Date(), blocked=new Set();
+    let EMAIL='', PASS='', current=new Date(), blocked=new Set();
 
     function key(y,m,d){ return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
 
@@ -131,7 +142,7 @@
     async function toggle(el){
       const k=el.dataset.k; const willBlock=!blocked.has(k);
       el.classList.add('saving');
-      const { error } = await sb.rpc('toggle_block', { p_pass:PASS, p_date:k, p_block:willBlock });
+      const { error } = await sb.rpc('panel_toggle', { p_email:EMAIL, p_pass:PASS, p_date:k, p_block:willBlock });
       el.classList.remove('saving');
       const msg=document.getElementById('panelMsg');
       if(error){ msg.textContent='Error al guardar. Inténtalo de nuevo.'; msg.className='msg err'; return; }
@@ -144,24 +155,40 @@
 
     async function enter(){
       const btn=document.getElementById('enter'), msg=document.getElementById('loginMsg');
+      const em=(document.getElementById('email').value||'').trim();
       const p=document.getElementById('pass').value;
-      if(!p) return;
+      if(!em || !p){ msg.textContent='Introduce email y contraseña.'; msg.className='msg err'; return; }
       btn.disabled=true; btn.textContent='Entrando...'; msg.textContent='';
-      const { data, error } = await sb.rpc('check_pass', { p_pass:p });
+      const { data, error } = await sb.rpc('panel_login', { p_email:em, p_pass:p });
       btn.disabled=false; btn.textContent='Entrar';
       if(error){ msg.textContent='Error de conexión.'; msg.className='msg err'; return; }
       if(data===true){
-        PASS=p;
+        EMAIL=em; PASS=p;
         document.getElementById('login').style.display='none';
         document.getElementById('panel').style.display='block';
         loadBlocked();
       } else {
-        msg.textContent='Contraseña incorrecta.'; msg.className='msg err';
+        msg.textContent='Email o contraseña incorrectos.'; msg.className='msg err';
       }
+    }
+
+    async function changePass(){
+      const np=document.getElementById('cpNew').value, msg=document.getElementById('cpMsg'), btn=document.getElementById('cpSave');
+      if(!np || np.length<6){ msg.textContent='Mínimo 6 caracteres.'; msg.className='msg err'; return; }
+      btn.disabled=true; btn.textContent='Guardando...';
+      const { data, error } = await sb.rpc('panel_change_pass', { p_email:EMAIL, p_pass:PASS, p_new:np });
+      btn.disabled=false; btn.textContent='Guardar contraseña';
+      if(error || data!==true){ msg.textContent='No se pudo cambiar.'; msg.className='msg err'; return; }
+      PASS=np; document.getElementById('cpNew').value='';
+      msg.textContent='Contraseña actualizada ✓'; msg.className='msg ok';
+      setTimeout(()=>{ msg.textContent=''; document.getElementById('cp').style.display='none'; }, 2200);
     }
 
     document.getElementById('enter').addEventListener('click', enter);
     document.getElementById('pass').addEventListener('keydown', e=>{ if(e.key==='Enter') enter(); });
+    document.getElementById('email').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('pass').focus(); });
+    document.getElementById('showcp').addEventListener('click', ()=>{ const c=document.getElementById('cp'); c.style.display = c.style.display==='none'?'block':'none'; });
+    document.getElementById('cpSave').addEventListener('click', changePass);
     document.getElementById('prev').addEventListener('click', ()=>{ current.setMonth(current.getMonth()-1); render(); });
     document.getElementById('next').addEventListener('click', ()=>{ current.setMonth(current.getMonth()+1); render(); });
     document.getElementById('logout').addEventListener('click', ()=>{ PASS=''; location.reload(); });
