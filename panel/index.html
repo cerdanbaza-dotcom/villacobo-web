@@ -12,46 +12,65 @@
   <style>
     :root{ --verde:#1E2A1E; --verde-mid:#36402F; --oro:#B89A4E; --oro-soft:rgba(184,154,78,.6); --marfil:#F3F0E6; --gris-soft:#8C8674; }
     *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
-    body{ font-family:'Archivo',sans-serif; background:var(--verde); color:var(--marfil); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+    body{ font-family:'Archivo',sans-serif; background:var(--verde); color:var(--marfil); min-height:100vh; display:flex; align-items:flex-start; justify-content:center; padding:32px 18px; }
     a{ color:inherit; }
-    .card{ width:100%; max-width:520px; background:rgba(243,240,230,.04); border:1px solid rgba(184,154,78,.2); padding:40px 36px; }
-    .brand{ text-align:center; margin-bottom:28px; }
+    .card{ width:100%; max-width:560px; background:rgba(243,240,230,.04); border:1px solid rgba(184,154,78,.2); padding:36px 30px; }
+    .brand{ text-align:center; margin-bottom:24px; }
     .brand .v{ font-weight:200; letter-spacing:.5em; font-size:10px; text-transform:uppercase; color:var(--oro); padding-left:.5em; }
-    .brand .c{ font-family:'Bodoni Moda',serif; font-size:34px; letter-spacing:.1em; text-transform:uppercase; line-height:1; }
-    .brand .sub{ font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:var(--gris-soft); margin-top:10px; }
+    .brand .c{ font-family:'Bodoni Moda',serif; font-size:32px; letter-spacing:.1em; text-transform:uppercase; line-height:1; }
+    .brand .sub{ font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:var(--gris-soft); margin-top:9px; }
 
-    .label{ font-size:9px; font-weight:300; letter-spacing:.32em; text-transform:uppercase; color:var(--gris-soft); display:block; margin-bottom:8px; }
-    input[type=password],input[type=email]{ width:100%; background:rgba(243,240,230,.06); border:1px solid rgba(243,240,230,.18); color:var(--marfil); padding:14px 16px; font-family:'Archivo'; font-size:14px; outline:none; transition:border-color .2s; }
-    input[type=password]:focus,input[type=email]:focus{ border-color:var(--oro); }
-    .btn{ width:100%; margin-top:18px; background:var(--oro); border:1px solid var(--oro); color:var(--verde); padding:15px; font-family:'Archivo'; font-size:11px; font-weight:400; letter-spacing:.3em; text-transform:uppercase; cursor:pointer; transition:background .2s; }
+    .label{ font-size:9px; font-weight:300; letter-spacing:.32em; text-transform:uppercase; color:var(--gris-soft); display:block; margin-bottom:7px; }
+    input{ width:100%; background:rgba(243,240,230,.06); border:1px solid rgba(243,240,230,.18); color:var(--marfil); padding:13px 14px; font-family:'Archivo'; font-size:14px; outline:none; transition:border-color .2s; }
+    input:focus{ border-color:var(--oro); }
+    input::placeholder{ color:rgba(243,240,230,.3); }
+    .btn{ width:100%; margin-top:6px; background:var(--oro); border:1px solid var(--oro); color:var(--verde); padding:14px; font-family:'Archivo'; font-size:11px; font-weight:400; letter-spacing:.3em; text-transform:uppercase; cursor:pointer; transition:background .2s; }
     .btn:hover{ background:#C7BFAC; }
     .btn:disabled{ opacity:.5; cursor:default; }
-    .msg{ margin-top:14px; font-size:12px; font-weight:300; min-height:18px; text-align:center; }
-    .msg.err{ color:#E0A0A0; }
-    .msg.ok{ color:var(--oro); }
+    .msg{ margin-top:12px; font-size:12px; font-weight:300; min-height:16px; text-align:center; }
+    .msg.err{ color:#E0A0A0; } .msg.ok{ color:var(--oro); }
 
     #panel{ display:none; }
-    .cal-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
-    .cal-title{ font-family:'Bodoni Moda',serif; font-size:18px; letter-spacing:.08em; text-transform:uppercase; }
-    .cal-btn{ background:none; border:1px solid var(--oro-soft); color:var(--oro); width:34px; height:34px; cursor:pointer; font-size:15px; }
-    .cal-btn:hover{ background:rgba(184,154,78,.15); }
-    .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:5px; text-align:center; }
-    .dn{ font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:rgba(243,240,230,.35); padding:6px 0; }
-    .day{ padding:12px 0; font-size:13px; font-weight:300; cursor:pointer; border:1px solid transparent; border-radius:2px; transition:.15s; user-select:none; }
-    .day:hover:not(.past):not(.empty){ border-color:var(--oro-soft); }
-    .day.past{ opacity:.2; cursor:default; }
-    .day.empty{ cursor:default; }
-    .day.blocked{ background:var(--oro); color:var(--verde); font-weight:400; }
-    .day.saving{ opacity:.4; cursor:wait; }
-    .legend{ display:flex; gap:22px; justify-content:center; margin-top:18px; font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--gris-soft); }
-    .legend span{ display:flex; align-items:center; gap:7px; }
-    .legend i{ width:12px; height:12px; border-radius:2px; display:inline-block; }
-    .legend .free{ border:1px solid var(--oro-soft); }
-    .legend .occ{ background:var(--oro); }
-    .hint{ font-size:11px; font-weight:300; color:var(--gris-soft); line-height:1.7; text-align:center; margin-top:22px; }
-    .topbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:22px; }
+    .topbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
     .logout{ font-size:9px; letter-spacing:.25em; text-transform:uppercase; color:var(--gris-soft); cursor:pointer; background:none; border:none; }
     .logout:hover{ color:var(--oro); }
+    .sect-title{ font-family:'Bodoni Moda',serif; font-size:16px; letter-spacing:.06em; text-transform:uppercase; margin:28px 0 14px; color:var(--marfil); }
+    hr{ border:none; border-top:1px solid rgba(184,154,78,.15); margin:0; }
+
+    /* CALENDAR */
+    .cal-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+    .cal-title{ font-family:'Bodoni Moda',serif; font-size:17px; letter-spacing:.08em; text-transform:uppercase; }
+    .cal-btn{ background:none; border:1px solid var(--oro-soft); color:var(--oro); width:32px; height:32px; cursor:pointer; font-size:15px; }
+    .cal-btn:hover{ background:rgba(184,154,78,.15); }
+    .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; text-align:center; }
+    .dn{ font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:rgba(243,240,230,.35); padding:5px 0; }
+    .day{ padding:11px 0; font-size:13px; font-weight:300; border:1px solid transparent; border-radius:2px; transition:.15s; user-select:none; }
+    .day.free{ cursor:pointer; } .day.free:hover{ border-color:var(--oro-soft); }
+    .day.past{ opacity:.2; } .day.empty{ }
+    .day.manual{ background:rgba(184,154,78,.5); color:var(--verde); cursor:pointer; }
+    .day.res{ background:var(--oro); color:var(--verde); font-weight:400; cursor:default; }
+    .day.saving{ opacity:.4; cursor:wait; }
+    .legend{ display:flex; gap:18px; justify-content:center; margin-top:14px; font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--gris-soft); flex-wrap:wrap; }
+    .legend span{ display:flex; align-items:center; gap:6px; }
+    .legend i{ width:11px; height:11px; border-radius:2px; display:inline-block; }
+    .legend .free{ border:1px solid var(--oro-soft); }
+    .legend .res{ background:var(--oro); } .legend .man{ background:rgba(184,154,78,.5); }
+    .hint{ font-size:11px; font-weight:300; color:var(--gris-soft); line-height:1.6; text-align:center; margin-top:12px; }
+
+    /* FORM */
+    .frow{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+    .fg{ }
+    @media(max-width:480px){ .frow{ grid-template-columns:1fr; } }
+
+    /* RESERVAS LIST */
+    .res-list{ display:flex; flex-direction:column; gap:10px; }
+    .res-item{ border:1px solid rgba(243,240,230,.14); padding:14px 16px; display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+    .res-item .ri-dates{ font-family:'Bodoni Moda',serif; font-size:15px; color:var(--oro); }
+    .res-item .ri-name{ font-size:13px; margin-top:4px; }
+    .res-item .ri-meta{ font-size:11px; color:var(--gris-soft); margin-top:5px; line-height:1.6; }
+    .res-item .ri-del{ background:none; border:1px solid rgba(224,160,160,.4); color:#E0A0A0; font-size:9px; letter-spacing:.15em; text-transform:uppercase; padding:7px 10px; cursor:pointer; white-space:nowrap; }
+    .res-item .ri-del:hover{ background:rgba(224,160,160,.12); }
+    .empty-note{ font-size:12px; font-weight:300; color:var(--gris-soft); text-align:center; padding:12px 0; }
   </style>
 </head>
 <body>
@@ -59,7 +78,7 @@
     <div class="brand">
       <div class="v">Villa</div>
       <div class="c">Cobo</div>
-      <div class="sub">Panel de disponibilidad</div>
+      <div class="sub">Panel de reservas</div>
     </div>
 
     <!-- LOGIN -->
@@ -68,16 +87,18 @@
       <input type="email" id="email" placeholder="info@villacobo.es" autocomplete="username" value="info@villacobo.es">
       <label class="label" for="pass" style="margin-top:16px;">Contraseña</label>
       <input type="password" id="pass" placeholder="••••••••" autocomplete="current-password">
-      <button class="btn" id="enter">Entrar</button>
+      <button class="btn" id="enter" style="margin-top:18px;">Entrar</button>
       <div class="msg" id="loginMsg"></div>
     </div>
 
     <!-- PANEL -->
     <div id="panel">
       <div class="topbar">
-        <span class="label" style="margin:0;">Bloquea las fechas ocupadas</span>
+        <span class="label" style="margin:0;">Calendario y reservas</span>
         <button class="logout" id="logout">Salir</button>
       </div>
+
+      <!-- CALENDARIO -->
       <div class="cal-head">
         <button class="cal-btn" id="prev">‹</button>
         <span class="cal-title" id="mlabel"></span>
@@ -86,16 +107,42 @@
       <div class="cal-grid" id="grid"></div>
       <div class="legend">
         <span><i class="free"></i> Libre</span>
-        <span><i class="occ"></i> Ocupado</span>
+        <span><i class="res"></i> Reserva</span>
+        <span><i class="man"></i> Bloqueo manual</span>
       </div>
-      <div class="msg" id="panelMsg"></div>
-      <p class="hint">Toca un día para marcarlo <b>Ocupado</b> o liberarlo.<br>Lo que bloquees aquí aparece como no disponible en villacobo.es.</p>
-      <div style="margin-top:22px; border-top:1px solid rgba(184,154,78,.15); padding-top:16px; text-align:center;">
+      <p class="hint" id="calMsg">Toca un día <b>libre</b> para bloquearlo manualmente (o liberar un bloqueo).<br>Las fechas de una reserva se liberan borrando la reserva abajo.</p>
+
+      <hr style="margin-top:8px;">
+
+      <!-- NUEVA RESERVA -->
+      <div class="sect-title">Nueva reserva</div>
+      <div class="frow">
+        <div class="fg"><label class="label">Fecha entrada</label><input type="date" id="r_in"></div>
+        <div class="fg"><label class="label">Fecha salida</label><input type="date" id="r_out"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="label">Nombre</label><input type="text" id="r_nombre" placeholder="Nombre"></div>
+        <div class="fg"><label class="label">Apellidos</label><input type="text" id="r_apellidos" placeholder="Apellidos"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="label">DNI / Pasaporte</label><input type="text" id="r_dni" placeholder="DNI"></div>
+        <div class="fg"><label class="label">Teléfono</label><input type="tel" id="r_tel" placeholder="+34 600 000 000"></div>
+      </div>
+      <div class="fg" style="margin-bottom:12px;"><label class="label">Email del cliente</label><input type="email" id="r_email" placeholder="cliente@correo.com"></div>
+      <button class="btn" id="r_save">Guardar reserva</button>
+      <div class="msg" id="formMsg"></div>
+
+      <!-- LISTA RESERVAS -->
+      <div class="sect-title">Reservas</div>
+      <div class="res-list" id="resList"></div>
+
+      <!-- CAMBIAR CONTRASEÑA -->
+      <div style="margin-top:26px; border-top:1px solid rgba(184,154,78,.15); padding-top:16px; text-align:center;">
         <button class="logout" id="showcp">Cambiar contraseña</button>
         <div id="cp" style="display:none; margin-top:14px; text-align:left;">
           <label class="label" for="cpNew">Nueva contraseña</label>
           <input type="password" id="cpNew" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
-          <button class="btn" id="cpSave">Guardar contraseña</button>
+          <button class="btn" id="cpSave" style="margin-top:10px;">Guardar contraseña</button>
           <div class="msg" id="cpMsg"></div>
         </div>
       </div>
@@ -110,20 +157,28 @@
 
     const DAYS=['L','M','X','J','V','S','D'];
     const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-    let EMAIL='', PASS='', current=new Date(), blocked=new Set();
+    let EMAIL='', PASS='', current=new Date();
+    let resDates=new Set(), manualDates=new Set(), reservations=[];
 
+    const $=id=>document.getElementById(id);
     function key(y,m,d){ return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
+    function fmt(s){ const [y,m,d]=s.split('-'); return `${d}/${m}/${y}`; }
 
-    async function loadBlocked(){
-      const { data, error } = await sb.from('blocked_dates').select('d');
-      blocked = new Set((data||[]).map(r=>r.d));
-      render();
+    async function loadAll(){
+      const [{ data:bd }, { data:res }] = await Promise.all([
+        sb.from('blocked_dates').select('d, reservation_id'),
+        sb.rpc('panel_list_reservations', { p_email:EMAIL, p_pass:PASS })
+      ]);
+      resDates = new Set((bd||[]).filter(r=>r.reservation_id).map(r=>r.d));
+      manualDates = new Set((bd||[]).filter(r=>!r.reservation_id).map(r=>r.d));
+      reservations = res||[];
+      render(); renderList();
     }
 
     function render(){
       const y=current.getFullYear(), m=current.getMonth();
-      document.getElementById('mlabel').textContent = `${MONTHS[m]} ${y}`;
-      const grid=document.getElementById('grid');
+      $('mlabel').textContent = `${MONTHS[m]} ${y}`;
+      const grid=$('grid');
       grid.innerHTML = DAYS.map(d=>`<div class="dn">${d}</div>`).join('');
       const first=new Date(y,m,1).getDay(); const offset=first===0?6:first-1;
       const days=new Date(y,m+1,0).getDate();
@@ -131,67 +186,108 @@
       for(let i=0;i<offset;i++) grid.innerHTML+=`<div class="day empty"></div>`;
       for(let i=1;i<=days;i++){
         const k=key(y,m,i); const date=new Date(y,m,i);
-        let cls='day'; if(date<today) cls+=' past'; if(blocked.has(k)) cls+=' blocked';
+        let cls='day';
+        if(date<today) cls+=' past';
+        else if(resDates.has(k)) cls+=' res';
+        else if(manualDates.has(k)) cls+=' manual';
+        else cls+=' free';
         grid.innerHTML+=`<div class="${cls}" data-k="${k}">${i}</div>`;
       }
-      grid.querySelectorAll('.day:not(.past):not(.empty)').forEach(el=>{
-        el.addEventListener('click', ()=>toggle(el));
-      });
+      grid.querySelectorAll('.day.free, .day.manual').forEach(el=>el.addEventListener('click',()=>toggleManual(el)));
+      grid.querySelectorAll('.day.res').forEach(el=>el.addEventListener('click',()=>{
+        $('calMsg').innerHTML='Esa fecha pertenece a una reserva. Para liberarla, borra la reserva en la lista de abajo.';
+      }));
     }
 
-    async function toggle(el){
-      const k=el.dataset.k; const willBlock=!blocked.has(k);
+    async function toggleManual(el){
+      const k=el.dataset.k; const willBlock=el.classList.contains('free');
       el.classList.add('saving');
       const { error } = await sb.rpc('panel_toggle', { p_email:EMAIL, p_pass:PASS, p_date:k, p_block:willBlock });
       el.classList.remove('saving');
-      const msg=document.getElementById('panelMsg');
-      if(error){ msg.textContent='Error al guardar. Inténtalo de nuevo.'; msg.className='msg err'; return; }
-      if(willBlock) blocked.add(k); else blocked.delete(k);
-      el.classList.toggle('blocked', willBlock);
-      msg.textContent = willBlock ? 'Fecha marcada como ocupada ✓' : 'Fecha liberada ✓';
-      msg.className='msg ok';
-      setTimeout(()=>{ msg.textContent=''; }, 1800);
+      if(error){ $('calMsg').textContent='Error al guardar.'; return; }
+      if(willBlock) manualDates.add(k); else manualDates.delete(k);
+      render();
+    }
+
+    function renderList(){
+      const box=$('resList');
+      if(!reservations.length){ box.innerHTML='<div class="empty-note">Aún no hay reservas. Crea la primera arriba.</div>'; return; }
+      box.innerHTML = reservations.map(r=>`
+        <div class="res-item">
+          <div>
+            <div class="ri-dates">${fmt(r.check_in)} → ${fmt(r.check_out)}</div>
+            <div class="ri-name">${[r.nombre, r.apellidos].filter(Boolean).join(' ')||'—'}</div>
+            <div class="ri-meta">
+              ${r.dni?('DNI: '+r.dni+'<br>'):''}${r.telefono?('Tel: '+r.telefono+'<br>'):''}${r.email?('Email: '+r.email):''}
+            </div>
+          </div>
+          <button class="ri-del" data-id="${r.id}">Borrar</button>
+        </div>`).join('');
+      box.querySelectorAll('.ri-del').forEach(b=>b.addEventListener('click',()=>delReservation(b.dataset.id, b)));
+    }
+
+    async function saveReservation(){
+      const msg=$('formMsg'), btn=$('r_save');
+      const p_in=$('r_in').value, p_out=$('r_out').value;
+      const nombre=$('r_nombre').value.trim();
+      if(!p_in || !p_out){ msg.textContent='Pon fecha de entrada y de salida.'; msg.className='msg err'; return; }
+      if(p_out <= p_in){ msg.textContent='La salida debe ser posterior a la entrada.'; msg.className='msg err'; return; }
+      if(!nombre){ msg.textContent='Pon al menos el nombre del cliente.'; msg.className='msg err'; return; }
+      btn.disabled=true; btn.textContent='Guardando...'; msg.textContent='';
+      const { error } = await sb.rpc('panel_add_reservation', {
+        p_email:EMAIL, p_pass:PASS, p_in, p_out,
+        p_nombre:nombre, p_apellidos:$('r_apellidos').value.trim(), p_dni:$('r_dni').value.trim(),
+        p_tel:$('r_tel').value.trim(), p_guest_email:$('r_email').value.trim(), p_notas:null
+      });
+      btn.disabled=false; btn.textContent='Guardar reserva';
+      if(error){ msg.textContent='No se pudo guardar. Revisa los datos.'; msg.className='msg err'; return; }
+      ['r_in','r_out','r_nombre','r_apellidos','r_dni','r_tel','r_email'].forEach(id=>$(id).value='');
+      msg.textContent='Reserva guardada ✓ — fechas bloqueadas en la web.'; msg.className='msg ok';
+      setTimeout(()=>msg.textContent='',2600);
+      loadAll();
+    }
+
+    async function delReservation(id, btn){
+      if(!confirm('¿Borrar esta reserva y liberar sus fechas?')) return;
+      btn.disabled=true; btn.textContent='...';
+      const { error } = await sb.rpc('panel_delete_reservation', { p_email:EMAIL, p_pass:PASS, p_id:id });
+      if(error){ btn.disabled=false; btn.textContent='Borrar'; alert('No se pudo borrar.'); return; }
+      loadAll();
     }
 
     async function enter(){
-      const btn=document.getElementById('enter'), msg=document.getElementById('loginMsg');
-      const em=(document.getElementById('email').value||'').trim();
-      const p=document.getElementById('pass').value;
-      if(!em || !p){ msg.textContent='Introduce email y contraseña.'; msg.className='msg err'; return; }
+      const btn=$('enter'), msg=$('loginMsg');
+      const em=($('email').value||'').trim(), p=$('pass').value;
+      if(!em||!p){ msg.textContent='Introduce email y contraseña.'; msg.className='msg err'; return; }
       btn.disabled=true; btn.textContent='Entrando...'; msg.textContent='';
       const { data, error } = await sb.rpc('panel_login', { p_email:em, p_pass:p });
       btn.disabled=false; btn.textContent='Entrar';
       if(error){ msg.textContent='Error de conexión.'; msg.className='msg err'; return; }
-      if(data===true){
-        EMAIL=em; PASS=p;
-        document.getElementById('login').style.display='none';
-        document.getElementById('panel').style.display='block';
-        loadBlocked();
-      } else {
-        msg.textContent='Email o contraseña incorrectos.'; msg.className='msg err';
-      }
+      if(data===true){ EMAIL=em; PASS=p; $('login').style.display='none'; $('panel').style.display='block'; loadAll(); }
+      else { msg.textContent='Email o contraseña incorrectos.'; msg.className='msg err'; }
     }
 
     async function changePass(){
-      const np=document.getElementById('cpNew').value, msg=document.getElementById('cpMsg'), btn=document.getElementById('cpSave');
-      if(!np || np.length<6){ msg.textContent='Mínimo 6 caracteres.'; msg.className='msg err'; return; }
+      const np=$('cpNew').value, msg=$('cpMsg'), btn=$('cpSave');
+      if(!np||np.length<6){ msg.textContent='Mínimo 6 caracteres.'; msg.className='msg err'; return; }
       btn.disabled=true; btn.textContent='Guardando...';
       const { data, error } = await sb.rpc('panel_change_pass', { p_email:EMAIL, p_pass:PASS, p_new:np });
       btn.disabled=false; btn.textContent='Guardar contraseña';
-      if(error || data!==true){ msg.textContent='No se pudo cambiar.'; msg.className='msg err'; return; }
-      PASS=np; document.getElementById('cpNew').value='';
+      if(error||data!==true){ msg.textContent='No se pudo cambiar.'; msg.className='msg err'; return; }
+      PASS=np; $('cpNew').value='';
       msg.textContent='Contraseña actualizada ✓'; msg.className='msg ok';
-      setTimeout(()=>{ msg.textContent=''; document.getElementById('cp').style.display='none'; }, 2200);
+      setTimeout(()=>{ msg.textContent=''; $('cp').style.display='none'; },2200);
     }
 
-    document.getElementById('enter').addEventListener('click', enter);
-    document.getElementById('pass').addEventListener('keydown', e=>{ if(e.key==='Enter') enter(); });
-    document.getElementById('email').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('pass').focus(); });
-    document.getElementById('showcp').addEventListener('click', ()=>{ const c=document.getElementById('cp'); c.style.display = c.style.display==='none'?'block':'none'; });
-    document.getElementById('cpSave').addEventListener('click', changePass);
-    document.getElementById('prev').addEventListener('click', ()=>{ current.setMonth(current.getMonth()-1); render(); });
-    document.getElementById('next').addEventListener('click', ()=>{ current.setMonth(current.getMonth()+1); render(); });
-    document.getElementById('logout').addEventListener('click', ()=>{ PASS=''; location.reload(); });
+    $('enter').addEventListener('click', enter);
+    $('pass').addEventListener('keydown', e=>{ if(e.key==='Enter') enter(); });
+    $('email').addEventListener('keydown', e=>{ if(e.key==='Enter') $('pass').focus(); });
+    $('prev').addEventListener('click', ()=>{ current.setMonth(current.getMonth()-1); render(); });
+    $('next').addEventListener('click', ()=>{ current.setMonth(current.getMonth()+1); render(); });
+    $('logout').addEventListener('click', ()=>{ EMAIL=''; PASS=''; location.reload(); });
+    $('r_save').addEventListener('click', saveReservation);
+    $('showcp').addEventListener('click', ()=>{ const c=$('cp'); c.style.display=c.style.display==='none'?'block':'none'; });
+    $('cpSave').addEventListener('click', changePass);
   </script>
 </body>
 </html>
