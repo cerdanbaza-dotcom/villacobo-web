@@ -661,8 +661,14 @@
   function scrollToReservar(){ document.getElementById('reservar').scrollIntoView({behavior:'smooth'}); }
 
   // ===== CALENDAR =====
-  const OCCUPIED = []; // ['2026-07-15', ...]
+  let OCCUPIED = []; // fechas ocupadas, se cargan desde Supabase (panel del propietario)
   let currentDate = new Date();
+  // Cargar disponibilidad real desde el panel (villacobo.es/panel)
+  (function loadDisponibilidad(){
+    const SB='https://pxvgambejvesosplgibb.supabase.co', K='sb_publishable_h0iKwibrHL5ZOigyKx9nJQ_fdj5g0uj';
+    fetch(`${SB}/rest/v1/blocked_dates?select=d`, { headers:{ apikey:K, Authorization:'Bearer '+K } })
+      .then(r=>r.ok?r.json():[]).then(rows=>{ OCCUPIED=(rows||[]).map(x=>x.d); renderCalendar(currentDate); }).catch(()=>{});
+  })();
   const DAYS=['L','M','X','J','V','S','D'];
   const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
   function renderCalendar(d){
