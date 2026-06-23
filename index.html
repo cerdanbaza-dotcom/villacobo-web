@@ -939,15 +939,8 @@
         scrollTrigger:{ trigger:'.hero', start:'top top', end:'bottom top', scrub:true }
       });
     }
-    // El vídeo del hero deriva un punto más lento que el scroll (profundidad).
-    // scale base = margen de seguridad para que NO asome el fondo al desplazar.
-    const hv=document.querySelector('.hero-bg');
-    if(hv){
-      gsap.fromTo(hv, { scale:1.2, yPercent:0 }, {
-        yPercent:7, ease:'none',
-        scrollTrigger:{ trigger:'.hero', start:'top top', end:'bottom top', scrub:true }
-      });
-    }
+    // (Sin parallax sobre el vídeo del hero: escalarlo/moverlo lo hacía temblar.
+    //  El fondo queda quieto y nítido; el efecto de profundidad lo da el texto.)
 
     // Recalcular tras intro y carga de fuentes/imágenes
     window.addEventListener('load', ()=>ScrollTrigger.refresh());
