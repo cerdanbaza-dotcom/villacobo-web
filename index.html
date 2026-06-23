@@ -30,6 +30,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Archivo:wght@200;300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/p-jacuzzi.jpg">
   <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
     :root{
       --verde:#1E2A1E; --verde-mid:#36402F; --oro:#B89A4E; --oro-soft:rgba(184,154,78,.6);
@@ -785,26 +787,48 @@
   document.getElementById('next-month').addEventListener('click',()=>{ currentDate.setMonth(currentDate.getMonth()+1); renderCalendar(currentDate); });
   renderCalendar(currentDate);
 
-  // ===== FORM -> guarda la solicitud (Supabase, visible en /panel) =====
+  // ===== FORM -> email PRIMARIO (FormSubmit) + Supabase best-effort (panel) =====
+  // El lead NUNCA se pierde: si la base de datos está pausada, el email sigue llegando.
   const RSB='https://pxvgambejvesosplgibb.supabase.co', RK='sb_publishable_h0iKwibrHL5ZOigyKx9nJQ_fdj5g0uj';
+  const FORM_EMAIL='info@villacobo.es';
   const form=document.getElementById('booking-form');
   form.addEventListener('submit', async e=>{
     e.preventDefault();
     const btn=form.querySelector('.form-submit'); btn.textContent='Enviando...'; btn.disabled=true;
     const g=n=>{ const el=form.querySelector(`[name="${n}"]`); return el?el.value.trim():''; };
-    try{
-      const res=await fetch(`${RSB}/rest/v1/rpc/submit_request`,{
-        method:'POST',
-        headers:{ apikey:RK, Authorization:'Bearer '+RK, 'Content-Type':'application/json' },
-        body:JSON.stringify({
-          p_nombre:g('nombre'), p_email:g('email'), p_telefono:g('telefono'),
-          p_in:g('fecha_entrada')||null, p_out:g('fecha_salida')||null,
-          p_personas:g('personas'), p_mensaje:g('mensaje')
-        })
-      });
-      if(res.ok){ form.style.display='none'; document.getElementById('form-success').style.display='block'; }
-      else{ btn.textContent='Error — inténtalo de nuevo'; btn.disabled=false; }
-    }catch{ btn.textContent='Error — inténtalo de nuevo'; btn.disabled=false; }
+    const d={
+      nombre:g('nombre'), email:g('email'), telefono:g('telefono'),
+      fecha_entrada:g('fecha_entrada'), fecha_salida:g('fecha_salida'),
+      personas:g('personas'), mensaje:g('mensaje')
+    };
+
+    // 1) EMAIL PRIMARIO — llega a info@villacobo.es aunque Supabase esté caído
+    const emailReq=fetch(`https://formsubmit.co/ajax/${FORM_EMAIL}`,{
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'Accept':'application/json' },
+      body:JSON.stringify({
+        _subject:'Nueva solicitud de reserva — Villa Cobo',
+        _captcha:'false', _template:'table',
+        Nombre:d.nombre, Email:d.email, 'Teléfono':d.telefono||'—',
+        Entrada:d.fecha_entrada||'—', Salida:d.fecha_salida||'—',
+        Personas:d.personas||'—', Mensaje:d.mensaje||'—'
+      })
+    }).then(r=>r.ok).catch(()=>false);
+
+    // 2) SUPABASE — best-effort, para que la solicitud también salga en el panel
+    const dbReq=fetch(`${RSB}/rest/v1/rpc/submit_request`,{
+      method:'POST',
+      headers:{ apikey:RK, Authorization:'Bearer '+RK, 'Content-Type':'application/json' },
+      body:JSON.stringify({
+        p_nombre:d.nombre, p_email:d.email, p_telefono:d.telefono,
+        p_in:d.fecha_entrada||null, p_out:d.fecha_salida||null,
+        p_personas:d.personas, p_mensaje:d.mensaje
+      })
+    }).then(r=>r.ok).catch(()=>false);
+
+    const [emailOk, dbOk]=await Promise.all([emailReq, dbReq]);
+    if(emailOk || dbOk){ form.style.display='none'; document.getElementById('form-success').style.display='block'; }
+    else{ btn.textContent='Error — inténtalo de nuevo'; btn.disabled=false; }
   });
 
   // ===== MÚSICA DE FONDO =====
@@ -877,6 +901,57 @@
   window.addEventListener('scroll', openWipes, {passive:true});
   if(lenis) lenis.on('scroll', openWipes);
   setTimeout(openWipes, 100); setTimeout(openWipes, 2200);
+
+  // ===== PROFUNDIDAD CON GSAP (parallax interno + hero cinematográfico) =====
+  // Aditivo: no toca intro, reveals, showcase ni galería. object-position para no
+  // chocar con el zoom de hover. Puenteado a Lenis. Respeta reduced-motion.
+  (function gsapDepth(){
+    if(reduce || !window.gsap || !window.ScrollTrigger) return;
+    gsap.registerPlugin(ScrollTrigger);
+    // Puente Lenis -> ScrollTrigger: que el scrub siga la inercia
+    if(window.__lenis) window.__lenis.on('scroll', ScrollTrigger.update);
+    else { window.addEventListener('scroll', ()=>ScrollTrigger.update(), {passive:true}); }
+
+    // 1) Parallax de profundidad DENTRO de las fotos grandes (object-position).
+    //    No tocamos .galh-cell (se mueve en horizontal) ni .villa-photo (ya tiene parallax JS).
+    gsap.utils.toArray('.feature-img img, .est-mosaic .cell img, .seaband').forEach(el=>{
+      const isBg = el.classList.contains('seaband');
+      if(isBg){
+        gsap.fromTo(el, { backgroundPositionY:'42%' }, {
+          backgroundPositionY:'58%', ease:'none',
+          scrollTrigger:{ trigger:el, start:'top bottom', end:'bottom top', scrub:true }
+        });
+      } else {
+        el.style.objectFit='cover';
+        gsap.fromTo(el, { objectPosition:'50% 38%' }, {
+          objectPosition:'50% 62%', ease:'none',
+          scrollTrigger:{ trigger:el.closest('.cell,.feature-img'), start:'top bottom', end:'bottom top', scrub:true }
+        });
+      }
+    });
+
+    // 2) Hero cinematográfico: el texto se funde y sube al hacer scroll (parallax de cierre).
+    const hc=document.querySelector('.hero-content');
+    if(hc){
+      gsap.to(hc, {
+        yPercent:34, opacity:0, ease:'none',
+        scrollTrigger:{ trigger:'.hero', start:'top top', end:'bottom top', scrub:true }
+      });
+    }
+    // El vídeo del hero deriva un punto más lento que el scroll (profundidad).
+    // scale base = margen de seguridad para que NO asome el fondo al desplazar.
+    const hv=document.querySelector('.hero-bg');
+    if(hv){
+      gsap.fromTo(hv, { scale:1.2, yPercent:0 }, {
+        yPercent:7, ease:'none',
+        scrollTrigger:{ trigger:'.hero', start:'top top', end:'bottom top', scrub:true }
+      });
+    }
+
+    // Recalcular tras intro y carga de fuentes/imágenes
+    window.addEventListener('load', ()=>ScrollTrigger.refresh());
+    setTimeout(()=>ScrollTrigger.refresh(), 2300);
+  })();
 </script>
 </body>
 </html>
