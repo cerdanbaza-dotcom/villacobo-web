@@ -259,7 +259,7 @@
     .form-submit{ background:var(--verde); border:1px solid var(--verde); color:var(--marfil); padding:16px 32px; font-family:'Archivo'; font-size:10px; font-weight:400; letter-spacing:.32em; text-transform:uppercase; cursor:pointer; transition:all .25s; margin-top:6px; }
     .form-submit:hover{ background:var(--oro); border-color:var(--oro); color:var(--verde); }
     .form-note{ font-size:11px; font-weight:300; color:var(--gris-soft); line-height:1.7; margin-top:4px; }
-    #form-success,#form-pending{ display:none; padding:22px; border:1px solid var(--oro-soft); background:rgba(184,154,78,.08); font-size:13px; font-weight:300; color:var(--gris); line-height:1.7; }
+    #form-success{ display:none; padding:22px; border:1px solid var(--oro-soft); background:rgba(184,154,78,.08); font-size:13px; font-weight:300; color:var(--gris); line-height:1.7; }
 
     /* ===== SHOWCASE (imagen que se expande al scroll) ===== */
     .showcase{ position:relative; height:220vh; background:var(--verde); }
@@ -595,7 +595,6 @@
     </div>
     <div class="reveal d2">
       <div id="form-success">✓ Solicitud recibida. Te contactaremos en menos de 24 horas para confirmar disponibilidad y condiciones.</div>
-      <div id="form-pending">El sistema de reservas online se activa en los próximos días.<br>Vuelve muy pronto para consultar disponibilidad.</div>
       <form class="booking-form" id="booking-form" method="POST">
         <input type="hidden" name="_subject" value="Nueva solicitud de reserva — Villa Cobo">
         <div class="form-row">
