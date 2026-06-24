@@ -404,7 +404,7 @@
 
 <!-- HERO -->
 <header id="top" class="hero">
-  <div class="hero-bg"><video src="assets/hero.mp4" autoplay muted loop playsinline preload="auto" poster="assets/hero-poster.jpg"></video></div>
+  <div class="hero-bg"><video id="heroVid" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="assets/hero-poster.jpg"></video></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="hero-eyebrow">Torremolinos · Costa del Sol</p>
@@ -657,6 +657,20 @@
 </footer>
 
 <script>
+  // ===== HERO VIDEO: fuente ligera en móvil + forzar reproducción (iOS/Android) =====
+  (function heroVideo(){
+    const v=document.getElementById('heroVid'); if(!v) return;
+    const mobile=window.matchMedia('(max-width:880px)').matches;
+    v.muted=true; v.setAttribute('muted',''); v.playsInline=true;
+    v.src = mobile ? 'assets/hero-mobile.mp4' : 'assets/hero.mp4';
+    const tryPlay=()=>{ const p=v.play(); if(p&&p.catch) p.catch(()=>{}); };
+    v.addEventListener('loadeddata', tryPlay);
+    v.addEventListener('canplay', tryPlay);
+    v.load(); tryPlay();
+    // Si el navegador bloquea el autoplay (modo bajo consumo, ahorro de datos), arranca al primer gesto
+    ['touchstart','pointerdown','click','scroll'].forEach(ev=>document.addEventListener(ev, tryPlay, {once:true, passive:true}));
+  })();
+
   // ===== HERO LETTER REVEAL =====
   function splitLetters(el, text, baseDelay){
     el.innerHTML = '';
