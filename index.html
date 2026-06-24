@@ -661,14 +661,18 @@
   (function heroVideo(){
     const v=document.getElementById('heroVid'); if(!v) return;
     const mobile=window.matchMedia('(max-width:880px)').matches;
-    v.muted=true; v.setAttribute('muted',''); v.playsInline=true;
+    v.muted=true; v.defaultMuted=true; v.setAttribute('muted',''); v.playsInline=true;
     v.src = mobile ? 'assets/hero-mobile.mp4' : 'assets/hero.mp4';
-    const tryPlay=()=>{ const p=v.play(); if(p&&p.catch) p.catch(()=>{}); };
-    v.addEventListener('loadeddata', tryPlay);
-    v.addEventListener('canplay', tryPlay);
-    v.load(); tryPlay();
-    // Si el navegador bloquea el autoplay (modo bajo consumo, ahorro de datos), arranca al primer gesto
-    ['touchstart','pointerdown','click','scroll'].forEach(ev=>document.addEventListener(ev, tryPlay, {once:true, passive:true}));
+    let playing=false;
+    const kick=()=>{ if(playing||!v.paused) return; const p=v.play(); if(p&&p.then) p.then(()=>{}).catch(()=>{}); };
+    v.addEventListener('playing', ()=>{ playing=true; });
+    v.addEventListener('pause', ()=>{ playing=false; });
+    // reintenta en cada evento de carga (no se "gasta")
+    ['loadeddata','canplay','canplaythrough'].forEach(e=>v.addEventListener(e, kick));
+    // y ante cualquier interacción (cubre modo bajo consumo / ahorro de datos en iOS)
+    ['touchstart','pointerdown','click','scroll','keydown','mousemove'].forEach(e=>document.addEventListener(e, kick, {passive:true}));
+    // reintentos temporizados hasta que de verdad se mueva (máx ~5s)
+    let n=0; const iv=setInterval(()=>{ kick(); if(playing||++n>15) clearInterval(iv); }, 350);
   })();
 
   // ===== HERO LETTER REVEAL =====
