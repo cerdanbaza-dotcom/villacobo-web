@@ -120,8 +120,8 @@
 
       <hr style="margin-top:24px;">
 
-      <!-- NUEVA RESERVA -->
-      <div class="sect-title">Nueva reserva</div>
+      <!-- NUEVA RESERVA / EDITAR -->
+      <div class="sect-title" id="formTitle">Nueva reserva</div>
       <div class="frow">
         <div class="fg"><label class="label">Fecha entrada</label><input type="date" id="r_in"></div>
         <div class="fg"><label class="label">Fecha salida</label><input type="date" id="r_out"></div>
@@ -136,6 +136,7 @@
       </div>
       <div class="fg" style="margin-bottom:12px;"><label class="label">Email del cliente</label><input type="email" id="r_email" placeholder="cliente@correo.com"></div>
       <button class="btn" id="r_save">Guardar reserva</button>
+      <button class="logout" id="r_cancel" style="display:none; width:100%; margin-top:10px;">Cancelar edición</button>
       <div class="msg" id="formMsg"></div>
 
       <!-- LISTA RESERVAS -->
@@ -163,7 +164,7 @@
 
     const DAYS=['L','M','X','J','V','S','D'];
     const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-    let EMAIL='', PASS='', current=new Date();
+    let EMAIL='', PASS='', current=new Date(), editingId=null;
     let resDates=new Set(), manualDates=new Set(), reservations=[], requests=[];
 
     const $=id=>document.getElementById(id);
@@ -257,9 +258,34 @@
               ${r.dni?('DNI: '+r.dni+'<br>'):''}${r.telefono?('Tel: '+r.telefono+'<br>'):''}${r.email?('Email: '+r.email):''}
             </div>
           </div>
-          <button class="ri-del" data-id="${r.id}">Borrar</button>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <button class="ri-del" style="border-color:var(--oro-soft); color:var(--oro);" data-edit="${r.id}">Editar</button>
+            <button class="ri-del" data-id="${r.id}">Borrar</button>
+          </div>
         </div>`).join('');
-      box.querySelectorAll('.ri-del').forEach(b=>b.addEventListener('click',()=>delReservation(b.dataset.id, b)));
+      box.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>startEdit(b.dataset.edit)));
+      box.querySelectorAll('.ri-del[data-id]').forEach(b=>b.addEventListener('click',()=>delReservation(b.dataset.id, b)));
+    }
+
+    function startEdit(id){
+      const r = reservations.find(x=>x.id===id); if(!r) return;
+      editingId = id;
+      $('r_in').value=r.check_in||''; $('r_out').value=r.check_out||'';
+      $('r_nombre').value=r.nombre||''; $('r_apellidos').value=r.apellidos||'';
+      $('r_dni').value=r.dni||''; $('r_tel').value=r.telefono||''; $('r_email').value=r.email||'';
+      $('formTitle').textContent='Editar reserva';
+      $('r_save').textContent='Guardar cambios';
+      $('r_cancel').style.display='block';
+      $('formMsg').textContent='';
+      $('formTitle').scrollIntoView({ behavior:'smooth', block:'center' });
+    }
+
+    function cancelEdit(){
+      editingId=null;
+      ['r_in','r_out','r_nombre','r_apellidos','r_dni','r_tel','r_email'].forEach(id=>$(id).value='');
+      $('formTitle').textContent='Nueva reserva';
+      $('r_save').textContent='Guardar reserva';
+      $('r_cancel').style.display='none';
     }
 
     async function saveReservation(){
@@ -269,16 +295,24 @@
       if(!p_in || !p_out){ msg.textContent='Pon fecha de entrada y de salida.'; msg.className='msg err'; return; }
       if(p_out <= p_in){ msg.textContent='La salida debe ser posterior a la entrada.'; msg.className='msg err'; return; }
       if(!nombre){ msg.textContent='Pon al menos el nombre del cliente.'; msg.className='msg err'; return; }
+      const editing = !!editingId;
       btn.disabled=true; btn.textContent='Guardando...'; msg.textContent='';
-      const { error } = await sb.rpc('panel_add_reservation', {
-        p_email:EMAIL, p_pass:PASS, p_in, p_out,
+      const args={ p_email:EMAIL, p_pass:PASS, p_in, p_out,
         p_nombre:nombre, p_apellidos:$('r_apellidos').value.trim(), p_dni:$('r_dni').value.trim(),
-        p_tel:$('r_tel').value.trim(), p_guest_email:$('r_email').value.trim(), p_notas:null
-      });
-      btn.disabled=false; btn.textContent='Guardar reserva';
-      if(error){ msg.textContent='No se pudo guardar. Revisa los datos.'; msg.className='msg err'; return; }
-      ['r_in','r_out','r_nombre','r_apellidos','r_dni','r_tel','r_email'].forEach(id=>$(id).value='');
-      msg.textContent='Reserva guardada ✓ — fechas bloqueadas en la web.'; msg.className='msg ok';
+        p_tel:$('r_tel').value.trim(), p_guest_email:$('r_email').value.trim(), p_notas:null };
+      const { error } = editing
+        ? await sb.rpc('panel_update_reservation', { ...args, p_id:editingId })
+        : await sb.rpc('panel_add_reservation', args);
+      btn.disabled=false; btn.textContent = editing?'Guardar cambios':'Guardar reserva';
+      if(error){
+        msg.textContent = /OCUPADO/.test(error.message||'')
+          ? 'Esas fechas chocan con otra reserva o un bloqueo manual. Libéralas primero.'
+          : 'No se pudo guardar. Revisa los datos.';
+        msg.className='msg err'; return;
+      }
+      cancelEdit();
+      msg.textContent = editing ? 'Reserva actualizada ✓ — calendario actualizado.' : 'Reserva guardada ✓ — fechas bloqueadas en la web.';
+      msg.className='msg ok';
       setTimeout(()=>msg.textContent='',2600);
       loadAll();
     }
@@ -322,6 +356,7 @@
     $('next').addEventListener('click', ()=>{ current.setMonth(current.getMonth()+1); render(); });
     $('logout').addEventListener('click', ()=>{ EMAIL=''; PASS=''; location.reload(); });
     $('r_save').addEventListener('click', saveReservation);
+    $('r_cancel').addEventListener('click', cancelEdit);
     $('showcp').addEventListener('click', ()=>{ const c=$('cp'); c.style.display=c.style.display==='none'?'block':'none'; });
     $('cpSave').addEventListener('click', changePass);
   </script>
