@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía del huésped · Villa Cobo · Torremolinos</title>
+  <meta name="description" content="Guía del huésped de Villa Cobo: playas, restaurantes, qué ver y escapadas en Torremolinos y la Costa del Sol.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <meta property="og:title" content="Guía del huésped · Villa Cobo">
+  <meta property="og:description" content="Playas, sabores y rincones de Torremolinos y la Costa del Sol, seleccionados para nuestros huéspedes.">
+  <meta property="og:image" content="https://villacobo.es/assets/og-cobo.jpg">
+  <meta property="og:url" content="https://villacobo.es/guia/">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Archivo:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --verde:#1E2A1E; --verde-mid:#36402F; --oro:#B89A4E; --oro-claro:#D4B86A; --oro-soft:rgba(184,154,78,.55);
+      --marfil:#F3F0E6; --gris:#4A5243; --gris-soft:#8C8674; --beige:#C7BFAC;
+    }
+    *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; }
+    body{ font-family:'Archivo',sans-serif; background:var(--marfil); color:var(--verde); -webkit-font-smoothing:antialiased; }
+    a{ color:inherit; text-decoration:none; }
+    img{ max-width:100%; display:block; }
+    .wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+
+    /* ===== NAV ===== */
+    nav{ position:sticky; top:0; z-index:50; background:rgba(243,240,230,.92); backdrop-filter:blur(10px); border-bottom:1px solid rgba(30,42,30,.08); }
+    .nav-in{ max-width:1080px; margin:0 auto; padding:14px 24px; display:flex; justify-content:space-between; align-items:center; }
+    .nav-logo{ line-height:1; }
+    .nav-logo .v{ font-weight:200; letter-spacing:.55em; font-size:9px; text-transform:uppercase; color:var(--gris); }
+    .nav-logo .c{ font-family:'Bodoni Moda',serif; letter-spacing:.08em; font-size:22px; text-transform:uppercase; }
+    .nav-back{ font-size:11px; letter-spacing:.22em; text-transform:uppercase; font-weight:400; color:var(--gris); border:1px solid var(--oro-soft); padding:9px 16px; border-radius:99px; transition:.25s; }
+    .nav-back:hover{ background:var(--verde); color:var(--marfil); border-color:var(--verde); }
+
+    /* ===== HERO ===== */
+    header.hero{ position:relative; min-height:62vh; display:flex; align-items:flex-end; color:var(--marfil); overflow:hidden; }
+    .hero-bg{ position:absolute; inset:0; background:url('../assets/p-azotea.jpg') center 35%/cover no-repeat; filter:brightness(.55) saturate(.9); }
+    .hero-bg::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(30,42,30,.25), rgba(30,42,30,.78)); }
+    .hero-in{ position:relative; z-index:2; width:100%; max-width:1080px; margin:0 auto; padding:120px 24px 56px; }
+    .hero-kicker{ letter-spacing:.5em; font-size:11px; text-transform:uppercase; font-weight:300; color:var(--oro-claro); margin-bottom:18px; }
+    .hero h1{ font-family:'Bodoni Moda',serif; font-weight:400; font-size:clamp(40px,7.5vw,76px); line-height:1.02; letter-spacing:.02em; max-width:14ch; }
+    .hero p{ font-family:'Bodoni Moda',serif; font-style:italic; font-size:clamp(16px,2.2vw,21px); opacity:.85; margin-top:16px; max-width:44ch; }
+
+    /* ===== SECTIONS ===== */
+    section{ padding:76px 0; }
+    section.band{ background:var(--verde); color:var(--marfil); }
+    .sec-head{ margin-bottom:40px; }
+    .sec-kicker{ letter-spacing:.44em; font-size:10px; text-transform:uppercase; font-weight:400; color:var(--oro); margin-bottom:12px; }
+    .band .sec-kicker{ color:var(--oro-claro); }
+    .sec-head h2{ font-family:'Bodoni Moda',serif; font-weight:400; font-size:clamp(30px,4.6vw,46px); line-height:1.05; }
+    .sec-head .sub{ font-weight:300; font-size:15px; margin-top:12px; max-width:58ch; color:var(--gris); line-height:1.65; }
+    .band .sub{ color:var(--beige); }
+
+    .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); gap:18px; }
+    .card{ background:#fff; border:1px solid rgba(30,42,30,.09); border-radius:14px; padding:24px 22px; display:flex; flex-direction:column; gap:9px; transition:transform .25s ease, box-shadow .25s ease; }
+    .card:hover{ transform:translateY(-3px); box-shadow:0 14px 34px rgba(30,42,30,.10); }
+    .band .card{ background:rgba(243,240,230,.05); border-color:rgba(243,240,230,.14); }
+    .card .tag{ letter-spacing:.3em; font-size:9px; text-transform:uppercase; color:var(--oro); font-weight:400; }
+    .card h3{ font-family:'Bodoni Moda',serif; font-weight:500; font-size:21px; line-height:1.15; }
+    .card p{ font-weight:300; font-size:13.5px; line-height:1.65; color:var(--gris); flex:1; }
+    .band .card p{ color:var(--beige); }
+    .card .maps{ align-self:flex-start; margin-top:6px; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; font-weight:400; color:var(--verde); border-bottom:1px solid var(--oro); padding-bottom:3px; transition:.2s; }
+    .card .maps:hover{ color:var(--oro); }
+    .band .card .maps{ color:var(--marfil); }
+    .band .card .maps:hover{ color:var(--oro-claro); }
+
+    /* contact strip */
+    .contact-strip{ background:var(--verde); color:var(--marfil); border-radius:18px; padding:34px 30px; display:flex; flex-wrap:wrap; gap:26px; align-items:center; justify-content:space-between; margin-top:-46px; position:relative; z-index:5; box-shadow:0 22px 50px rgba(30,42,30,.28); }
+    .contact-strip .lead{ max-width:36ch; }
+    .contact-strip .lead .k{ letter-spacing:.4em; font-size:10px; text-transform:uppercase; color:var(--oro-claro); }
+    .contact-strip .lead h3{ font-family:'Bodoni Moda',serif; font-weight:400; font-size:24px; margin-top:8px; }
+    .contact-actions{ display:flex; gap:12px; flex-wrap:wrap; }
+    .btn{ display:inline-flex; align-items:center; gap:9px; padding:13px 22px; border-radius:99px; font-size:12px; letter-spacing:.16em; text-transform:uppercase; font-weight:400; transition:.25s; }
+    .btn-oro{ background:var(--oro); color:var(--verde); }
+    .btn-oro:hover{ background:var(--oro-claro); }
+    .btn-line{ border:1px solid rgba(243,240,230,.4); color:var(--marfil); }
+    .btn-line:hover{ border-color:var(--oro-claro); color:var(--oro-claro); }
+
+    /* sabores */
+    .sabores{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px; }
+    .sabor{ border:1px solid var(--oro-soft); border-radius:14px; padding:22px; text-align:center; }
+    .sabor h3{ font-family:'Bodoni Moda',serif; font-style:italic; font-weight:400; font-size:20px; margin-bottom:8px; }
+    .sabor p{ font-weight:300; font-size:13px; line-height:1.6; color:var(--gris); }
+
+    /* emergencias */
+    .emg{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; }
+    .emg .e{ background:#fff; border:1px solid rgba(30,42,30,.09); border-radius:12px; padding:18px; text-align:center; }
+    .emg .n{ font-family:'Bodoni Moda',serif; font-size:30px; color:var(--verde); }
+    .emg .l{ font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--gris-soft); margin-top:6px; font-weight:400; }
+
+    /* footer */
+    footer{ background:var(--verde); color:var(--marfil); padding:64px 24px 36px; text-align:center; }
+    .footer-logo .v{ font-weight:200; letter-spacing:.6em; font-size:12px; text-transform:uppercase; padding-left:.6em; color:var(--beige); }
+    .footer-logo .c{ font-family:'Bodoni Moda',serif; font-weight:400; letter-spacing:.12em; font-size:44px; line-height:1; padding-left:.12em; text-transform:uppercase; }
+    .footer-logo .tagl{ font-family:'Bodoni Moda',serif; font-style:italic; font-size:16px; opacity:.8; margin-top:10px; }
+    footer .links{ margin-top:26px; display:flex; gap:22px; justify-content:center; flex-wrap:wrap; font-size:12.5px; font-weight:300; }
+    footer .links a{ opacity:.85; border-bottom:1px solid transparent; padding-bottom:2px; }
+    footer .links a:hover{ color:var(--oro-claro); opacity:1; border-color:var(--oro-soft); }
+    footer .fine{ margin-top:34px; font-size:11px; letter-spacing:.08em; color:var(--gris-soft); }
+
+    /* reveals */
+    .rv{ opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease; }
+    .rv.on{ opacity:1; transform:none; }
+    @media (prefers-reduced-motion:reduce){ .rv{ opacity:1; transform:none; transition:none; } }
+    @media (max-width:640px){
+      section{ padding:56px 0; }
+      .contact-strip{ padding:28px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="nav-logo" href="https://villacobo.es/" aria-label="Villa Cobo — inicio">
+      <div class="v">Villa</div>
+      <div class="c">Cobo</div>
+    </a>
+    <a class="nav-back" href="https://villacobo.es/">villacobo.es</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-in">
+    <div class="hero-kicker">Guía del huésped</div>
+    <h1>Bienvenidos a Villa Cobo</h1>
+    <p>Lo mejor de Torremolinos y la Costa del Sol, seleccionado para que solo tengáis que disfrutar.</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="contact-strip rv">
+    <div class="lead">
+      <div class="k">Estamos a un mensaje</div>
+      <h3>¿Cualquier duda durante la estancia?</h3>
+    </div>
+    <div class="contact-actions">
+      <a class="btn btn-oro" href="https://wa.me/34695588069?text=Hola%2C%20somos%20hu%C3%A9spedes%20de%20Villa%20Cobo.%20" target="_blank" rel="noopener">WhatsApp directo</a>
+      <a class="btn btn-line" href="mailto:info@villacobo.es">info@villacobo.es</a>
+    </div>
+  </div>
+</div>
+
+<section id="playas">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">El mar</div>
+      <h2>Playas</h2>
+      <p class="sub">Torremolinos tiene siete kilómetros de litoral. Estas son las playas que recomendamos según el plan del día.</p>
+    </div>
+    <div class="grid">
+      <div class="card rv">
+        <span class="tag">La clásica</span>
+        <h3>La Carihuela</h3>
+        <p>El antiguo barrio marinero. Arena fina, paseo lleno de chiringuitos y el mejor pescaíto de la zona. Ideal para pasar el día entero.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Playa+La+Carihuela+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">La céntrica</span>
+        <h3>El Bajondillo</h3>
+        <p>A los pies del centro, amplia y con todos los servicios. Se baja desde la calle San Miguel por los ascensores o las escaleras del acantilado.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Playa+El+Bajondillo+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">La animada</span>
+        <h3>Los Álamos</h3>
+        <p>La playa joven: beach clubs, música y ambiente hasta el atardecer. Perfecta si apetece algo más que sombrilla y toalla.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Playa+Los+Alamos+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">La tranquila</span>
+        <h3>Playamar</h3>
+        <p>Entre El Bajondillo y Los Álamos, más despejada y con paseo ancho. Buena opción para caminar al amanecer o correr junto al mar.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Playa+Playamar+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="comer">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">La mesa</div>
+      <h2>Dónde comer</h2>
+      <p class="sub">Una selección corta y honesta. En La Carihuela, casi cualquier chiringuito con espetero a la puerta es garantía.</p>
+    </div>
+    <div class="grid">
+      <div class="card rv">
+        <span class="tag">Marisco · La Carihuela</span>
+        <h3>Casa Juan — Los Mellizos</h3>
+        <p>La institución del pescado y el marisco en Torremolinos. Fritura malagueña, arroces y producto de lonja. Conviene reservar en temporada.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Casa+Juan+Los+Mellizos+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">Frente al mar</span>
+        <h3>El Gato Lounge</h3>
+        <p>Cocina viajera y atardeceres sobre la arena de El Bajondillo. Para una comida larga o una copa al caer el sol.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=El+Gato+Lounge+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">Tradición malagueña</span>
+        <h3>Bodegas Quitapenas</h3>
+        <p>Taberna centenaria de vinos dulces de Málaga y tapas de siempre. La parada perfecta paseando por el centro.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Bodegas+Quitapenas+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">El rito local</span>
+        <h3>Espetos en la playa</h3>
+        <p>Sardinas ensartadas en caña y asadas a la brasa junto al mar. Se piden en cualquier chiringuito de La Carihuela: sencillo y memorable.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=chiringuitos+La+Carihuela+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="torremolinos">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">A un paseo</div>
+      <h2>Qué ver en Torremolinos</h2>
+    </div>
+    <div class="grid">
+      <div class="card rv">
+        <span class="tag">La joya</span>
+        <h3>Casa de los Navajas</h3>
+        <p>Palacete neomudéjar asomado al mar, con jardines y vistas a la bahía. Entrada gratuita y a diez minutos del centro.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Casa+de+los+Navajas+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">El corazón</span>
+        <h3>Calle San Miguel</h3>
+        <p>La arteria peatonal del centro: comercios, heladerías y terrazas. Desde su final se baja al mar por el acantilado de El Bajondillo.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Calle+San+Miguel+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">Naturaleza</span>
+        <h3>Jardín Botánico Molino de Inca</h3>
+        <p>Un oasis de manantiales, estanques y aves junto al arroyo de la Cueva. Ideal para una mañana fresca fuera de la playa.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Jardin+Botanico+Molino+de+Inca+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">Atardecer</span>
+        <h3>Parque La Batería</h3>
+        <p>Antigua batería militar convertida en parque con torre mirador, lago y vistas de toda la bahía. Perfecto al caer la tarde.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Parque+La+Bateria+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="escapadas">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">La Costa del Sol</div>
+      <h2>Escapadas cerca</h2>
+      <p class="sub">Con coche o tren de cercanías, media Costa del Sol queda a menos de una hora.</p>
+    </div>
+    <div class="grid">
+      <div class="card rv">
+        <span class="tag">± 15 min</span>
+        <h3>Benalmádena</h3>
+        <p>Puerto Marina, el teleférico al monte Calamorro y el castillo de Colomares. Un día completo sin madrugar.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Puerto+Marina+Benalmadena" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">± 20 min</span>
+        <h3>Málaga capital</h3>
+        <p>La Alcazaba, el Teatro Romano, el Museo Picasso, calle Larios y el Muelle Uno. El cercanías C1 deja en el centro sin buscar aparcamiento.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Alcazaba+de+Malaga" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">± 30 min</span>
+        <h3>Mijas Pueblo</h3>
+        <p>Pueblo blanco en la montaña: callejuelas encaladas, miradores y artesanía. La postal andaluza a un paso.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Mijas+Pueblo" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">± 1 h · reservar</span>
+        <h3>Caminito del Rey</h3>
+        <p>La pasarela sobre el desfiladero de los Gaitanes, una de las rutas más espectaculares de España. Las entradas vuelan: comprad con antelación.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Caminito+del+Rey" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ninos">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">En familia</div>
+      <h2>Con niños</h2>
+    </div>
+    <div class="grid">
+      <div class="card rv">
+        <span class="tag">Agua</span>
+        <h3>Aqualand Torremolinos</h3>
+        <p>El parque acuático de referencia de la Costa del Sol, en el propio Torremolinos. Abre en temporada de verano.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Aqualand+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">Animales</span>
+        <h3>Crocodile Park</h3>
+        <p>Más de 200 cocodrilos y exhibiciones diarias, a un paso del centro de Torremolinos. Visita corta y muy resultona.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Crocodile+Park+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">Mar</span>
+        <h3>Sea Life Benalmádena</h3>
+        <p>Acuario en Puerto Marina con tiburones, rayas y zona interactiva. Combina bien con un paseo por el puerto.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Sea+Life+Benalmadena" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">Altura</span>
+        <h3>Teleférico de Benalmádena</h3>
+        <p>Cabinas hasta la cima del Calamorro con vistas de toda la costa y exhibiciones de aves rapaces en verano.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Teleferico+Benalmadena" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="sabores" style="padding-top:0;">
+  <div class="wrap" style="padding-top:76px;">
+    <div class="sec-head rv">
+      <div class="sec-kicker">No os vayáis sin probar</div>
+      <h2>Sabores de Málaga</h2>
+    </div>
+    <div class="sabores">
+      <div class="sabor rv" style="border-color:rgba(212,184,106,.4);">
+        <h3 style="color:var(--oro-claro);">Espeto de sardinas</h3>
+        <p style="color:var(--beige);">A la brasa, en la orilla, con las manos. El plato que resume la costa malagueña.</p>
+      </div>
+      <div class="sabor rv" style="border-color:rgba(212,184,106,.4);">
+        <h3 style="color:var(--oro-claro);">Fritura malagueña</h3>
+        <p style="color:var(--beige);">Boquerones victorianos, calamares y salmonetes. Ligera, crujiente y para compartir.</p>
+      </div>
+      <div class="sabor rv" style="border-color:rgba(212,184,106,.4);">
+        <h3 style="color:var(--oro-claro);">Porra antequerana</h3>
+        <p style="color:var(--beige);">Prima espesa del salmorejo, perfecta en los días de calor.</p>
+      </div>
+      <div class="sabor rv" style="border-color:rgba(212,184,106,.4);">
+        <h3 style="color:var(--oro-claro);">Vino dulce de Málaga</h3>
+        <p style="color:var(--beige);">Moscatel y Pedro Ximénez de la tierra, servidos de barrica en las bodegas de siempre.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="util">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">Por si acaso</div>
+      <h2>Teléfonos útiles</h2>
+    </div>
+    <div class="emg">
+      <div class="e rv"><div class="n">112</div><div class="l">Emergencias</div></div>
+      <div class="e rv"><div class="n">061</div><div class="l">Urgencias médicas</div></div>
+      <div class="e rv"><div class="n">091</div><div class="l">Policía Nacional</div></div>
+      <div class="e rv"><div class="n">092</div><div class="l">Policía Local</div></div>
+    </div>
+    <p class="rv" style="margin-top:22px; font-weight:300; font-size:13.5px; color:var(--gris); line-height:1.7;">
+      Para farmacias de guardia, buscad «farmacia de guardia Torremolinos» en Google Maps — la más cercana de guardia aparece señalada.
+      Y para todo lo relacionado con la casa, escribidnos directamente por
+      <a href="https://wa.me/34695588069" target="_blank" rel="noopener" style="border-bottom:1px solid var(--oro); color:var(--verde);">WhatsApp</a>.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">
+    <div class="v">Villa</div>
+    <div class="c">Cobo</div>
+    <div class="tagl">El lujo de lo esencial.</div>
+  </div>
+  <div class="links">
+    <a href="https://villacobo.es/">villacobo.es</a>
+    <a href="https://villacobo.es/#ubicacion">Cómo llegar</a>
+    <a href="https://wa.me/34695588069" target="_blank" rel="noopener">WhatsApp</a>
+    <a href="mailto:info@villacobo.es">info@villacobo.es</a>
+    <a href="https://villacobo.es/privacidad.html">Privacidad</a>
+  </div>
+  <div class="fine">© 2026 Villa Cobo · Torremolinos · Costa del Sol</div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((es)=>{ es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } }); }, { threshold:.12 });
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
