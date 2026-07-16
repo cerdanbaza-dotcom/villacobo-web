@@ -85,6 +85,20 @@
     .sabor h3{ font-family:'Bodoni Moda',serif; font-style:italic; font-weight:400; font-size:20px; margin-bottom:8px; }
     .sabor p{ font-weight:300; font-size:13px; line-height:1.6; color:var(--gris); }
 
+    /* la casa: bloques con listas */
+    .duo{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px; margin-top:18px; }
+    .bloque{ background:#fff; border:1px solid rgba(30,42,30,.09); border-radius:14px; padding:26px 24px; }
+    .bloque h3{ font-family:'Bodoni Moda',serif; font-weight:500; font-size:22px; margin-bottom:14px; }
+    .bloque .tag{ display:block; letter-spacing:.3em; font-size:9px; text-transform:uppercase; color:var(--oro); font-weight:400; margin-bottom:8px; }
+    .bloque ul, .bloque ol{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px; }
+    .bloque li{ font-weight:300; font-size:13.5px; line-height:1.6; color:var(--gris); padding-left:24px; position:relative; }
+    .bloque ul li::before{ content:'—'; position:absolute; left:0; color:var(--oro); }
+    .bloque.check ul li::before{ content:'✓'; }
+    .bloque ol{ counter-reset:paso; }
+    .bloque ol li{ counter-increment:paso; padding-left:32px; }
+    .bloque ol li::before{ content:counter(paso); position:absolute; left:0; top:1px; width:20px; height:20px; border:1px solid var(--oro); border-radius:50%; font-size:10.5px; display:flex; align-items:center; justify-content:center; color:var(--verde); }
+    .bloque .nota{ margin-top:14px; font-size:12.5px; font-weight:300; color:var(--gris-soft); line-height:1.55; border-top:1px solid rgba(184,154,78,.35); padding-top:12px; }
+
     /* emergencias */
     .emg{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; }
     .emg .e{ background:#fff; border:1px solid rgba(30,42,30,.09); border-radius:12px; padding:18px; text-align:center; }
@@ -152,7 +166,7 @@
       <h2>Lo esencial</h2>
     </div>
     <div class="grid">
-      <div class="card rv" style="max-width:420px;">
+      <div class="card rv">
         <span class="tag">WiFi · Router 5G</span>
         <h3>Conexión de la villa</h3>
         <p style="font-size:14.5px;">
@@ -160,6 +174,68 @@
           Clave: <strong id="wifipass" style="letter-spacing:.04em;">mU3XC9A9J7kQ</strong>
         </p>
         <button class="maps" id="copywifi" type="button" style="background:none; border:none; border-bottom:1px solid var(--oro); cursor:pointer; font-family:'Archivo';">Copiar clave</button>
+      </div>
+      <div class="card rv">
+        <span class="tag">Check-in · Check-out</span>
+        <h3>Llegada y salida</h3>
+        <p style="font-size:14.5px;">
+          Entrada a partir de las <strong>15:00 h</strong>.<br>
+          Salida antes de las <strong>11:00 h</strong>.<br><br>
+          Las llaves se entregan <strong>en mano</strong>, personalmente, a vuestra llegada.
+        </p>
+      </div>
+      <div class="card rv">
+        <span class="tag">Coche</span>
+        <h3>Aparcamiento</h3>
+        <p>La villa no dispone de aparcamiento privado, pero se aparca fácilmente en la calle: normalmente hay plazas libres en los alrededores.</p>
+      </div>
+      <div class="card rv">
+        <span class="tag">Compras</span>
+        <h3>Supermercados</h3>
+        <p>A pocos minutos tenéis <strong>Mercadona</strong>, <strong>Lidl</strong> y <strong>Carrefour Express</strong> para llenar la nevera el primer día.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=supermercados+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+    </div>
+
+    <div class="duo">
+      <div class="bloque rv">
+        <span class="tag">Convivencia</span>
+        <h3>Normas de la casa</h3>
+        <ul>
+          <li>No está permitido fumar en el interior de la vivienda; se puede fumar en la terraza.</li>
+          <li>No se permiten fiestas ni eventos.</li>
+          <li>Respetad el descanso de los vecinos: evitad ruidos a partir de las <strong>23:30 h</strong>.</li>
+          <li>No se admiten mascotas.</li>
+          <li>Cuidad la vivienda y el mobiliario como si fueran vuestros.</li>
+        </ul>
+      </div>
+      <div class="bloque check rv">
+        <span class="tag">Check-out</span>
+        <h3>Antes de la salida</h3>
+        <ul>
+          <li>Apagad el aire acondicionado o la calefacción.</li>
+          <li>Cerrad todas las ventanas y apagad las luces.</li>
+          <li>Depositad la basura en los contenedores.</li>
+          <li>Dejad platos, vasos y utensilios dentro del lavavajillas.</li>
+          <li>Dejad toallas y ropa de cama usada en el cesto de cada habitación.</li>
+          <li>Comprobad que la puerta queda bien cerrada.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="duo">
+      <div class="bloque rv" style="grid-column:1 / -1;">
+        <span class="tag">Jacuzzi · Intex PureSpa</span>
+        <h3>El jacuzzi, paso a paso</h3>
+        <ol>
+          <li>Retirad la tapa antes de utilizarlo.</li>
+          <li>Pulsad el botón <strong>ON/OFF</strong> para encender el panel.</li>
+          <li>Pulsad <strong>HEAT</strong> para activar el calentamiento y ajustad la temperatura con <strong>+</strong> y <strong>−</strong>.</li>
+          <li>Cuando el agua alcance la temperatura deseada, pulsad <strong>BUBBLE</strong> para activar las burbujas.</li>
+          <li>Las burbujas funcionan unos 30 minutos y se apagan solas.</li>
+          <li>Al terminar, apagad el jacuzzi y volved a colocar la tapa.</li>
+        </ol>
+        <p class="nota">Importante: no activéis las burbujas con la tapa completamente cerrada, y mantened la tapa puesta cuando no se use — conserva la temperatura y mantiene el agua limpia.</p>
       </div>
     </div>
   </div>
@@ -420,7 +496,8 @@
     </div>
     <p class="rv" style="margin-top:22px; font-weight:300; font-size:13.5px; color:var(--gris); line-height:1.7;">
       Para farmacias de guardia, buscad «farmacia de guardia Torremolinos» en Google Maps — la más cercana de guardia aparece señalada.
-      Y para todo lo relacionado con la casa, escribidnos directamente por
+      Cuando salgáis de la vivienda, recordad dejar puertas y ventanas cerradas, y os agradecemos un uso responsable del agua y la electricidad.
+      Ante cualquier incidencia o si necesitáis ayuda durante la estancia, escribidnos directamente por
       <a href="https://wa.me/34695588069" target="_blank" rel="noopener" style="border-bottom:1px solid var(--oro); color:var(--verde);">WhatsApp</a>.
     </p>
   </div>
