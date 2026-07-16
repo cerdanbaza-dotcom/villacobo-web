@@ -145,6 +145,26 @@
   </div>
 </div>
 
+<section id="casa">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">La casa</div>
+      <h2>Lo esencial</h2>
+    </div>
+    <div class="grid">
+      <div class="card rv" style="max-width:420px;">
+        <span class="tag">WiFi · Router 5G</span>
+        <h3>Conexión de la villa</h3>
+        <p style="font-size:14.5px;">
+          Red: <strong>Flybox-BB3B</strong><br>
+          Clave: <strong id="wifipass" style="letter-spacing:.04em;">mU3XC9A9J7kQ</strong>
+        </p>
+        <button class="maps" id="copywifi" type="button" style="background:none; border:none; border-bottom:1px solid var(--oro); cursor:pointer; font-family:'Archivo';">Copiar clave</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="playas">
   <div class="wrap">
     <div class="sec-head rv">
@@ -288,6 +308,42 @@
   </div>
 </section>
 
+<section id="deporte">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">Cuerpo y mente</div>
+      <h2>Deporte y bienestar</h2>
+      <p class="sub">La villa está en una zona pensada para el que no quiere parar ni en vacaciones: golf, gimnasios y el mar para correr al amanecer.</p>
+    </div>
+    <div class="grid">
+      <div class="card rv">
+        <span class="tag">Golf</span>
+        <h3>Campo de golf Miguel Ángel Jiménez</h3>
+        <p>El campo del célebre golfista malagueño, a un paso de la villa. Ideal para unos hoyos o para iniciarse con clases en un entorno exclusivo.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Golf+Miguel+Angel+Jimenez+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">Gimnasio</span>
+        <h3>Lidomare Fitness Club</h3>
+        <p>Club de fitness cercano con sala de fuerza, cardio y actividades dirigidas, para no romper la rutina durante la estancia.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Lidomare+Fitness+Club+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">Gimnasio</span>
+        <h3>Fitness Park</h3>
+        <p>Gimnasio amplio y bien equipado en la zona: pesas, máquinas y zona cardio, con acceso flexible.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Fitness+Park+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+      <div class="card rv">
+        <span class="tag">Al aire libre</span>
+        <h3>Paseo marítimo</h3>
+        <p>Siete kilómetros junto al mar para correr o caminar al amanecer, de La Carihuela a Los Álamos sin un solo semáforo.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Paseo+Maritimo+Torremolinos" target="_blank" rel="noopener">Ver en Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="ninos">
   <div class="wrap">
     <div class="sec-head rv">
@@ -389,6 +445,18 @@
 <script>
   const io = new IntersectionObserver((es)=>{ es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } }); }, { threshold:.12 });
   document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  const cw = document.getElementById('copywifi');
+  if (cw) cw.addEventListener('click', async ()=>{
+    const pass = document.getElementById('wifipass').textContent.trim();
+    try { await navigator.clipboard.writeText(pass); }
+    catch(e){
+      const ta=document.createElement('textarea'); ta.value=pass; document.body.appendChild(ta);
+      ta.select(); document.execCommand('copy'); ta.remove();
+    }
+    const prev = cw.textContent; cw.textContent = 'Copiada ✓';
+    setTimeout(()=>{ cw.textContent = prev; }, 1800);
+  });
 </script>
 
 </body>
